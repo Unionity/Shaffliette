@@ -5,6 +5,7 @@ bin/*
 plugins/*
 platforms/*
 node_modules/*
+lib/*
 www/assets/imgs/icons/*
 jquery*
 .bithoundrc

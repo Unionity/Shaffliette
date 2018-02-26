@@ -8,7 +8,7 @@
         JIX Technologies
     </author>
     <icon src="assets/imgs/Shaffl.png" />
-    <preference name="android-minSdkVersion" value="12" />
+    <preference name="android-minSdkVersion" value="20" />
     <preference name="android-targetSdkVersion" value="25" />
     <preference name="android-installLocation" value="preferExternal" />
     <preference name="OverrideUserAgent" value="Mozilla/5.0 (Linux; x64;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge+Shaffl/14.14393+0.0.1" />
