@@ -1,0 +1,62 @@
+.shaffl-tag {
+  margin: .1pc;
+  display: inline-block;
+  color: #fff;
+  border-radius: 15pt;
+}
+.shaffl-tag span {
+  margin-right: 5pt;
+  font-style: oblique;
+}
+.shaffl-tag .shaffl-tag--category, .shaffl-tag .shaffl-tag--wiki {
+  padding: 5pt;
+  display: inline-block;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+}
+.shaffl-tag .shaffl-tag--category img {
+  vertical-align: middle;
+}
+.shaffl-tag[data-category=general] {
+  background-color: #147dff;
+}
+.shaffl-tag[data-category=general] .shaffl-tag--category, .shaffl-tag[data-category=general] .shaffl-tag--wiki {
+  background: blue;
+}
+.shaffl-tag[data-category=meta] {
+  background-color: #F80;
+}
+.shaffl-tag[data-category=meta] .shaffl-tag--category, .shaffl-tag[data-category=meta] .shaffl-tag--wiki {
+  background: #bc3d07;
+}
+.shaffl-tag[data-category=character] {
+  background-color: #0A0;
+}
+.shaffl-tag[data-category=character] .shaffl-tag--category, .shaffl-tag[data-category=character] .shaffl-tag--wiki {
+  background: #003500;
+}
+.shaffl-tag[data-category=artist] {
+  background-color: #A00;
+}
+.shaffl-tag[data-category=artist] .shaffl-tag--category, .shaffl-tag[data-category=artist] .shaffl-tag--wiki {
+  background: #660000;
+}
+.shaffl-tag[data-category=copyrights] {
+  background-color: #A0A;
+}
+.shaffl-tag[data-category=copyrights] .shaffl-tag--category, .shaffl-tag[data-category=copyrights] .shaffl-tag--wiki {
+  background: #600060;
+}
+.shaffl-tag[data-category=unknown] {
+  background-color: #777;
+}
+.shaffl-tag[data-category=unknown] .shaffl-tag--category, .shaffl-tag[data-category=copyrights] .shaffl-tag--wiki {
+  background: #666;
+}
+.shaffl-tag[data-category=special] {
+  background-color: #a71a20;
+}
+.shaffl-tag[data-category=special] .shaffl-tag--category, .shaffl-tag[data-category=copyrights] .shaffl-tag--wiki {
+  background: #721655;
+}

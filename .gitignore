@@ -1,0 +1,14 @@
+bin/*
+!/plugins
+!/plugins/android.json
+!/plugins/fetch.json
+plugins/*
+platforms/*
+node_modules/*
+www/assets/imgs/icons/*
+jquery*
+.bithoundrc
+bundle.js
+bundle.bat
+index.html
+page-lock.json

@@ -1,0 +1,71 @@
+doctype mobile
+html(lang='en')
+  head
+    script(src='cordova.js')
+    meta(http-equiv='Content-Security-Policy', content="default-src * blob:;style-src * 'self' 'unsafe-inline' 'unsafe-eval';script-src * 'self' 'unsafe-inline' 'unsafe-eval';")
+    link(rel='stylesheet', href='assets/styles/reset.css')
+    link(rel='stylesheet', href='assets/styles/index.css')
+    link(rel='stylesheet', href='assets/styles/color.css')
+    link(rel='stylesheet', href='assets/styles/tags.css')
+    link(rel='stylesheet', href='assets/styles/jquery-ui.min.css')
+    link(rel='stylesheet', href='assets/styles/jquery-ui.structure.min.css')
+    link(rel='stylesheet', href='assets/styles/jquery-ui.theme.min.css')
+    script(src='js/bundle.js')
+    title Shaffl
+  body
+    section#shaffl-moreActions--menu
+      ul
+        li#shaffl-update.shaffl-contextmenu-item(onclick='window.location.reload(true);') Force update
+        li#shaffl-selectAll.shaffl-contextmenu-item Select all
+        li#shaffl-unselectAll.shaffl-contextmenu-item Unselect all
+        li#shaffl-invertChoice.shaffl-contextmenu-item Invert choice
+        hr
+        li#shaffl-downloadSelected.shaffl-contextmenu-item
+          img(src='assets/imgs/icons/download.png')
+          | Download selected...
+        li#shaffl-downloadAll.shaffl-contextmenu-item
+          img(src='assets/imgs/icons/download.png')
+          | Download all on this page...
+        hr
+        li#shaffl-settings.shaffl-contextmenu-item
+          img(src='assets/imgs/icons/settings.png')
+          | Settings
+    header.shaffl-header.hotblack-bg
+      img.shaffl-logo(src='assets/imgs/Shaffl.png')
+      img#shaffl-back(src='assets/imgs/Shaffl.png')
+      section#shaffl-collection-menu.shaffl-menu
+        img#shaffl-moreActions(src='assets/imgs/icons/more.png')
+        input#shaffl-search(type='search', autocomplete='off')
+      section#shaffl-art-menu.shaffl-menu
+        img#shaffl-moreInfo.shaffl-actionButton(src='assets/imgs/icons/info.png')
+        img#shaffl-share.shaffl-actionButton(src='assets/imgs/icons/share.png')
+        img#shaffl-download.shaffl-actionButton(src='assets/imgs/icons/download.png')
+        img#shaffl-copyImage.shaffl-actionButton(src='assets/imgs/icons/clipboard.png')
+    main.shaffl-main
+      article#shaffl-collection-view
+        center
+          article.shaffl-collection-view
+          em
+            ins#shaffl-more More
+      article#shaffl-image-view
+        img#shaffl-previous.shaffl-navigatorButton(src='assets/imgs/icons/previous.png')
+        img#shaffl-next.shaffl-navigatorButton(src='assets/imgs/icons/next.png')
+        article.shaffl-image-container
+        article.shaffl-image-info
+          h2.shaffl-image-info--brief
+          h2.shaffl-image-info--tags---title Tags
+          ul.shaffl-image-info--tags
+          .shaffl-tag(data-category='special')
+            .shaffl-tag--category
+              img(src='assets/imgs/icons/tags/special.png')
+            span
+              | Favourited 
+              strong.shaffl-image-info--favs -1
+              |  times
+          hr
+          h2 Comments
+          section.sahffl-image-info--comments
+    footer.shaffl-footer.hotblack-bg
+      p#shaffl-status Ready
+    script.
+      var controller = new ShafflIndexController();

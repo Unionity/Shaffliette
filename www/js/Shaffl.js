@@ -1,0 +1,5 @@
+const Shaffl = {
+	notify(event) => {
+		
+	}
+};

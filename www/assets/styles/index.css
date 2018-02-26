@@ -1,0 +1,207 @@
+.shaffl-header {
+	height: 10%;
+}
+.shaffl-main {
+	height: 85%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch; 
+}
+.shaffl-main[data-image=true] {
+	overflow-y: hidden;
+}
+.shaffl-header .shaffl-logo {
+	cursor: pointer;
+	max-height: 100%;
+}
+.shaffl-footer {
+	height: 5%;
+}
+.shaffl-image-container {
+	width: 100%;
+	height: 100%;
+}
+.shaffl-menu {
+	float: right;
+}
+.shaffl-image-info {
+	overflow-y: scroll;
+	width: 100%;
+	height: 100%;
+	background: #383838;
+	color: #efefef;
+	display: none;
+}
+.shaffl-navigatorButton {
+	position: fixed;
+    top: 49%;
+    cursor: pointer;
+	z-index: 999;
+}
+.shaffl-image-info h2 {
+	margin: 0;
+}
+.shaffl-image-info ul {
+	list-style: none;
+	margin: 0px;
+    padding: 10px;
+}
+.shaffl-contextmenu-item {
+	padding: 10px;
+}
+.shaffl-contextmenu-item > img {
+	vertical-align: middle;
+	padding-right: 5px;
+}
+.shaffl-contextmenu-item:hover {
+	background: #3a3a3a;
+}
+.shaffl-actionButton {
+	visibility: hidden;
+	float: right;
+	margin: 15px;
+	cursor: pointer;
+}
+.shaffl-art-view {
+	width: 100%;
+	height: 100%;
+}
+.shaffl-art--thumb {
+	margin: 10px;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: transform, border-width .2s ease-in-out;
+	border: 1px solid #000;
+}
+.shaffl-art--thumb {
+	margin: 10px;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: transform, border-width .2s ease-in-out;
+	border: 1px solid #000;
+}
+.shaffl-art--thumb:hover {
+	transform: scale3d(1.1, 1.1, 1.1);
+}
+.shaffl-art--thumb[data-selected=selected] {
+	border-width: 5px;
+	transform: scale3d(.7, .7, .7);
+}
+.comment {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #fff;
+}
+.shaffl-historyEntry {
+	border: 0px transparent solid;
+	border-bottom: 1px solid: #000;
+	margin: 2px;
+	color: #000;
+}
+.shaffl-historyEntry p {
+	color: #000;
+}
+.shaffl-historyEntry time {
+	font-size: 0.8rem;
+	font-style: oblique;
+}
+.ui-dialog-titlebar-close {
+  display: none;
+}
+.ui-dialog {
+  max-width: 95vw;
+}
+#shaffl-more {
+	text-decoration: underline;
+	cursor: pointer;
+}
+#shaffl-image-view {
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+#shaffl-art-menu {
+	display: none;
+}
+#shaffl-art-image {
+	max-width: 100%;
+	max-height: 100%;
+}
+#shaffl-bgblur {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	filter: blur(110px);
+}
+#shaffl-search {
+	float: right;
+	margin-right: 20px;
+    margin-top: 5px;
+    background: transparent;
+    height: 60%;
+	width: 190px;
+    color: #fff;
+    font-size: large;
+    border: 0;
+    outline: none!important;
+    border-bottom: #fff solid 2px;
+}
+#shaffl-moreActions {
+	float: right;
+    margin-top: 15px;
+    margin-right: 15px;
+	cursor: pointer;
+}
+#shaffl-moreActions--menu {
+	z-index: 999;
+	display: none;
+	position: fixed;
+	background: #2b2b2b;
+	top: 10%;
+	right: 10px;
+	padding: 5px;
+	border-radius: 0 0 5px 5px;
+	color: #efefef;
+}
+#shaffl-moreActions--menu > ul {
+	padding: 0;
+    margin: 0;
+	list-style: none;
+	cursor: pointer;
+}
+#shaffl-downloadSelected {
+	display: none;
+}
+#shaffl-back {
+	cursor: pointer;
+	display: none;
+}
+#shaffl-previous {
+	left: 1pc;
+}
+#shaffl-next {
+	right: 1pc;
+}
+#shaffl-settingsDialog--history {
+	max-height: 15vh;
+	overflow-y: scroll;
+}
+#shaffl-downloadingDialog progress {
+   -webkit-appearance: none;
+   width: 100%;
+}
+#shaffl-downloadingDialog progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border: 1px #000 solid;
+  border-radius: 10px;
+  padding: 2px;
+}
+#shaffl-downloadingDialog progress[value]::-webkit-progress-value {
+  background-color: #2b2b2b;
+  border-radius: 10px;
+  transition: width .2s ease-in-out;
+}
