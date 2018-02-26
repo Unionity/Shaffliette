@@ -1,5 +1,5 @@
 # Shaffliette (Shaffl)
-![License][license_badge] ![Open issues][issues_badge]
+![License][license_badge] ![Open issues][issues_badge]  
 Shaffliette (or for short Shaffl) is lightweight (3MB installed/1MB gzipped) open-source booru viewing client for &nbsp;&nbsp;![Android][android_badge].
 ## Features
 + [X] &nbsp;&nbsp;Tag autocompletion (Danbooru *.\* compatible boorus)
