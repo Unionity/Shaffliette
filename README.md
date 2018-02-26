@@ -21,6 +21,8 @@ Shaffliette (or for short Shaffl) is lightweight (3MB installed/1MB gzipped) ope
 | One Yukkuri Place| Yes       | Yes      | No           | No        |
 | Konachan         | Yes       | No       | No           | No        |
 | e621            | No        | No       | No           | No        |
+
+
 [license_badge]: https://img.shields.io/badge/license-BSD%202--Clause-blue.svg?style=flat-square
 [issues_badge]: https://img.shields.io/github/issues-raw/moemoesoft/shaffliette.svg?style=flat-square&colorB=8e0000&logo=github
 [android_badge]: https://img.shields.io/badge/Android-OS-green.svg?longCache=true&style=plastic&colorA=199600&colorB=199600
