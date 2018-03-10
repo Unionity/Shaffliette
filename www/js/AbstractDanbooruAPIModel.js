@@ -1,12 +1,13 @@
 class AbstractDanbooruAPIModel extends AbstractModel {
-	constructor(server, search = "/post/index.xml?tags=%SEARCH_STRING%&limit=20", art = "/index.php?page=dapi&s=post&q=index&id=%ID%") {
+	constructor(server) {
 		super();
 		this.ruleset = {
 			server: server,
-			search: search,
+			search: "/post/index.xml?tags=%SEARCH_STRING%&limit=20",
 			page: "&pid=%PAGE%",
-			art: art,
+			art: "/post/index.xml?page=dapi&s=post&q=index&id=%ID%",
 			autocomplete: "/autocomplete.php?q=%SEARCH_STRING%",
+			getArtByPage: false,
 			pool: null,
 			restrictions: {
 				maxtaglength: 2
@@ -51,7 +52,20 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 		});
 	}
 	getPoolById(id = 1, page = 1) {
-		
+		//TODO
+	}
+	parseArtFromXMLString(xmlString) {
+		let doc = new DOMParser().parseFromString(xmlString, "application/xml");
+		let art;
+		let tags = {misc: []};
+		if(doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full).substr(0, 1) === "/") {
+			art = that.ruleset.server+doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full);
+		} else {
+			art = doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full);
+		}
+		if(!art) reject("Bad response");
+		doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.tags.misc).split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
+		return new Art(id, art, doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.thumbnail), null, null, null, tags);
 	}
 	getArtById(id = 1) {
 		let that = this;
@@ -63,18 +77,7 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 						that.xhr = new XMLHttpRequest();
 						reject("Bad response");
 					}
-					let response = that.xhr.responseText;
-					let doc = new DOMParser().parseFromString(response, "application/xml");
-					let art;
-					let tags = {misc: []};
-					if(doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full).substr(0, 1) === "/") {
-						art = that.ruleset.server+doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full);
-					} else {
-						art = doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full);
-					}
-					if(!art) reject("Bad response");
-					doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.tags.misc).split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
-					resolve(new Art(id, art, doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.thumbnail), null, null, null, tags));
+					resolve(parseArtFromXMLString(response));
 				}
 			};
 			that.xhr.send();

@@ -58,7 +58,7 @@ class ShafflIndexController {
 											<option value='BooruDOMModel'>Danbooru (alternative)</option>
 											<option value='SafeBooruModel'>Safebooru</option>
 									    </optgroup>
-										<!--<option value='ThreeDBooruModel'>3dBooru</option>-->
+										<option value='ThreeDBooruModel'>3dBooru</option>
 										<option value='XBooruModel'>XBooru</option>
 										<option value='YukkuriModel'>One Yukkuri Place</option>
 										<option value='GelbooruModel'>Gelbooru</option>
@@ -158,6 +158,7 @@ class ShafflIndexController {
 		});
 	}
 	init() {
+		window.shafflCache = {};
 		window.loadCooling = false;
 		this.view.render(false);
 		this.addListeners();
@@ -183,6 +184,9 @@ class ShafflIndexController {
 		    this.model = eval("new "+model+"();"); //get model from settings and instanciate it
 			$("html").css({cursor: "wait"});
 			this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
+				collection.forEach(art => {
+					window.shafflCache[art.iuid] = art;
+				});
 				this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));
 				this.init();
 				$('#shaffl-search').autocomplete({

@@ -1,5 +1,6 @@
 class BooruDOMModel {
 	constructor() {
+		this.name = "BDM";
 		this.xhr = new XMLHttpRequest();
 		this.url = window.location.protocol+"//"+window.location.host;
 		this.ruleset = {
