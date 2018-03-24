@@ -63,8 +63,8 @@ class ShafflIndexController {
 											<option value='BooruDOMModel'>Danbooru (alternative)</option>
 											<option value='SafeBooruModel'>Safebooru</option>
 									    </optgroup>
-										<!--<option value='KonachanModel'>Konachan</option>
-										<option value='ThreeDBooruModel'>3dBooru</option>-->
+										<option value='KonachanModel'>Konachan</option>
+										<!--<option value='ThreeDBooruModel'>3dBooru</option>-->
 										<option value='XBooruModel'>XBooru</option>
 										<option value='YukkuriModel'>One Yukkuri Place</option>
 										<option value='GelbooruModel'>Gelbooru</option>
@@ -77,7 +77,7 @@ class ShafflIndexController {
 									<section id=shaffl-settingsDialog--history>
 									</section>
 									<br/><hr/>
-									<p class='hotblack'>Shaffl version: v0.0.1.4-pre Mobile Edition (26.02.18)</p>
+									<a href='about.html' class='hotblack'>Shaffl version: v0.0.1.5-pre Mobile Edition (26.03.18)</a>
 								</dialog>`);
 		    $("dialog").dialog({resizable: false, modal: true, draggable: false, show: {effect: "blind", duration: 500}, height: "auto", width: 400});
 			let db = openDatabase("Shaffl_Settings", "1", "Shaffl settings.", 9007199254740991);
@@ -129,27 +129,22 @@ class ShafflIndexController {
 		});
 	}
 	download(selectedOnly = true) {
-		let ids = [];
+		let arts = [];
 		let loaded = 0;
-		let selector;
-		if(selectedOnly) {
-			selector = ".shaffl-art--thumb[data-selected=selected]";
-		} else {
-			selector = ".shaffl-art--thumb";
-		}
+		let selector = selectedOnly ? ".shaffl-art--thumb[data-selected=selected]" : ".shaffl-art--thumb";
 		document.querySelectorAll(selector).forEach(selected => {
-			ids.push(selected.dataset.id);
+			arts.push(Object.setPrototypeOf(JSON.parse(decodeURIComponent(selected.dataset.art)), Art));
 		});
 		$("body").append("<dialog id=shaffl-downloadingDialog title=\"Downloading\">Downloading...<br/><progress min=\"1\" value=\"0\" max=\"100\"></progress></dialog>");
 		$("#shaffl-status").text("Downloading");
 		let DOWNLOAD_PATH = cordova.file.externalRootDirectory+"Pictures/";
-		let downloadMgr = new DownloadManager(ids, DOWNLOAD_PATH);
+		let downloadMgr = new DownloadManager(arts, DOWNLOAD_PATH);
 		$("dialog").dialog({resizable: false, modal: true, draggable: false, show: {effect: "blind", duration: 500}, height: "auto", width: 400});
 		downloadMgr.downloadAll(event => {
 			if(event == "saved") {
 				loaded++;
-				if(loaded === ids.length) window.setTimeout(() => {$(".ui-dialog, #shaffl-downloadingDialog").remove();}, 500); $("#shaffl-status").text("Ready");
-				let progress = 100/ids.length*loaded;
+				if(loaded === arts.length) window.setTimeout(() => {$(".ui-dialog, #shaffl-downloadingDialog").remove();}, 500); $("#shaffl-status").text("Ready");
+				let progress = 100/arts.length*loaded;
 				$("#shaffl-downloadingDialog progress").val(progress);
 			}
 		});
