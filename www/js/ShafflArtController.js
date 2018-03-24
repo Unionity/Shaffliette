@@ -37,27 +37,25 @@ class ShafflArtController {
 		$("#shaffl-previous").bind("click", () => {
 			let currentImage = $(".shaffl-art--thumb[data-viewing=true]");
 			currentImage.attr("data-viewing", "false");
-			if(currentImage.prev().data("id") !== undefined) {
+			if(currentImage.prev().data("art") !== undefined) {
 				currentImage.prev().attr("data-viewing", "true");
-				this.id = currentImage.prev().data("id");
-				this.model.getArtById(this.id).then(art => {
-					this.art = art;
-					this.view = new ShafflArtView(art, $(".shaffl-image-container"));
-					this.init();
-				});
+				let artObject = Object.setPrototypeOf(JSON.parse(decodeURIComponent(currentImage.prev().get(0).dataset.art)), Art);
+				this.id = artObject.id;
+				this.art = artObject;
+				this.view = new ShafflArtView(artObject, $(".shaffl-image-container"));
+				this.init();
 			}
 		});
 		$("#shaffl-next").bind("click", () => {
 			let currentImage = $(".shaffl-art--thumb[data-viewing=true]");
 			currentImage.attr("data-viewing", "false");
-			if(currentImage.next().data("id") !== undefined) {
+			if(currentImage.next().data("art") !== undefined) {
 				currentImage.next().attr("data-viewing", "true");
-				this.id = currentImage.next().data("id");
-				this.model.getArtById(this.id).then(art => {
-					this.art = art;
-					this.view = new ShafflArtView(art, $(".shaffl-image-container"));
-					this.init();
-				});
+				let artObject = Object.setPrototypeOf(JSON.parse(decodeURIComponent(currentImage.next().get(0).dataset.art)), Art);
+				this.id = artObject.id;
+				this.art = artObject;
+				this.view = new ShafflArtView(artObject, $(".shaffl-image-container"));
+				this.init();
 			}
 		});
 	}
@@ -127,18 +125,12 @@ class ShafflArtController {
 		xhr.send();
 		this.addListeners();
 	}
-	constructor(id) {
-		this.id = id;
-		this.settings = new Settings();
-		this.settings.get("model").then(model => {
-		    this.model = eval("new "+model+"();"); //get model from settings and instanciate it
-			$("html").css({cursor: "wait"});
-			this.model.getArtById(this.id).then(art => {
-				this.art = art;
-				this.view = new ShafflArtView(art, $(".shaffl-image-container"));
-				this.init();
-				$("html").css({cursor: "unset"});
-			});
-		});
+	constructor(art) {
+		$("html").css({cursor: "wait"});
+		this.art = art;
+		this.id = art.id;
+		this.view = new ShafflArtView(art, $(".shaffl-image-container"));
+		this.init();
+		$("html").css({cursor: "unset"});
 	}
 }

@@ -37,6 +37,9 @@
     top: 49%;
     cursor: pointer;
 	z-index: 999;
+	border: 1px black dashed;
+    border-radius: 100%;
+    background: black;
 }
 .shaffl-image-info h2 {
 	margin: 0;

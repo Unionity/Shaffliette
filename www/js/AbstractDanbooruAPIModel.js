@@ -54,18 +54,18 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 	getPoolById(id = 1, page = 1) {
 		//TODO
 	}
-	parseArtFromXMLString(xmlString) {
-		let doc = new DOMParser().parseFromString(xmlString, "application/xml");
+	parseArtByXMLString(string) {
+		let doc = new DOMParser().parseFromString(string, "application/xml");
 		let art;
 		let tags = {misc: []};
-		if(doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full).substr(0, 1) === "/") {
-			art = that.ruleset.server+doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full);
+		if(doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.full).substr(0, 1) === "/") {
+			art = this.ruleset.server+doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.full);
 		} else {
-			art = doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.full);
+			art = doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.full);
 		}
 		if(!art) reject("Bad response");
-		doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.tags.misc).split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
-		return new Art(id, art, doc.querySelector(that.ruleset.elements.arts.base).getAttribute(that.ruleset.elements.art.thumbnail), null, null, null, tags);
+		doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.tags.misc).split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
+		return new Art(doc.querySelector(this.ruleset.elements.arts.base).getAttribute("id"), art, doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.thumbnail), null, null, null, tags);
 	}
 	getArtById(id = 1) {
 		let that = this;
@@ -77,7 +77,7 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 						that.xhr = new XMLHttpRequest();
 						reject("Bad response");
 					}
-					resolve(parseArtFromXMLString(response));
+					resolve(that.parseArtFromXMLString(response));
 				}
 			};
 			that.xhr.send();
@@ -109,11 +109,7 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 					let collection = [];
 					if(arts == null) reject("Nobody here but us chickens!");
 					arts.forEach(art => {
-						let artId = art.getAttribute("id");
-						let thumbnail = art.getAttribute(that.ruleset.elements.art.thumbnail);
-						if(thumbnail !== null) {
-							collection.push(new Art( artId, that.ruleset.server+that.ruleset.art.replace("%ID%", artId), thumbnail, null, null, null));
-					    }
+						collection.push(that.parseArtByXMLString(art.outerHTML));
 					});
 					that.xhr = new XMLHttpRequest();
 					resolve(new ArtCollection(1, collection));

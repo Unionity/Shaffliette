@@ -58,6 +58,33 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 	getPoolById(id = 1, page = 1) {
 		
 	}
+	parseArtByXMLString(string) {
+		let doc = new DOMParser().parseFromString(string, "application/xml");
+		let art;
+		let tags = {copyrights: [], artist: [], characters: [], misc: [], meta: []};
+		let comments = [];
+		let pools = [];
+		if(doc.querySelector(this.ruleset.elements.art.full).innerHTML.substr(0, 1) === "/") {
+			art = this.ruleset.server+doc.querySelector(this.ruleset.elements.art.full).innerHTML;
+		} else {
+			art = doc.querySelector(this.ruleset.elements.art.full).innerHTML;
+		}
+		if(!art) reject("Bad response");
+		let poolTag = doc.querySelector(this.ruleset.elements.art.pools),
+			copyrightsTag = doc.querySelector(this.ruleset.elements.art.tags.copyrights),
+			charactersTag = doc.querySelector(this.ruleset.elements.art.tags.characters),
+			artistTag = doc.querySelector(this.ruleset.elements.art.tags.artist),
+			generalTag = doc.querySelector(this.ruleset.elements.art.tags.misc), //for some reasons, it is ruleset.elements.art.tags.misc and not general
+			metaTag = doc.querySelector(this.ruleset.elements.art.tags.meta),
+			id = doc.querySelector("id").innerHTML;
+		if(poolTag !== null) poolTag.innerHTML.split(" ").forEach(item => { pools.push(item.replace("pool:", "")); });
+		if(copyrightsTag !== null) copyrightsTag.innerHTML.split(" ").forEach(item => { tags.copyrights.push(new Tag(item)); });
+		if(charactersTag !== null) charactersTag.innerHTML.split(" ").forEach(item => { tags.characters.push(new Tag(item)); });
+		if(artistTag !== null) artistTag.innerHTML.split(" ").forEach(item => { tags.artist.push(new Tag(item)); });
+		if(generalTag !== null) generalTag.innerHTML.split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
+		if(metaTag !== null) metaTag.innerHTML.split(" ").forEach(item => { tags.meta.push(new Tag(item)); });
+		return new Art(id, art, this.ruleset.server+doc.querySelector(this.ruleset.elements.art.thumbnail).innerHTML, pools, doc.querySelector("fav-count").innerHTML, new CommentCollection(comments), tags);
+	}
 	getArtById(id = 1) {
 		let that = this;
 		return new Promise((resolve, reject) => {
@@ -69,30 +96,7 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 						reject("Bad response");
 					}
 					let response = that.xhr.responseText;
-					let doc = new DOMParser().parseFromString(response, "application/xml");
-					let art;
-					let tags = {copyrights: [], artist: [], characters: [], misc: [], meta: []};
-					let comments = [];
-					let pools = [];
-					if(doc.querySelector(that.ruleset.elements.art.full).innerHTML.substr(0, 1) === "/") {
-						art = that.ruleset.server+doc.querySelector(that.ruleset.elements.art.full).innerHTML;
-					} else {
-						art = doc.querySelector(that.ruleset.elements.art.full).innerHTML;
-					}
-					if(!art) reject("Bad response");
-					let poolTag = doc.querySelector(that.ruleset.elements.art.pools),
-					    copyrightsTag = doc.querySelector(that.ruleset.elements.art.tags.copyrights),
-						charactersTag = doc.querySelector(that.ruleset.elements.art.tags.characters),
-						artistTag = doc.querySelector(that.ruleset.elements.art.tags.artist),
-						generalTag = doc.querySelector(that.ruleset.elements.art.tags.misc), //for some reasons, it is ruleset.elements.art.tags.misc and not general
-						metaTag = doc.querySelector(that.ruleset.elements.art.tags.meta);
-					if(poolTag !== null) poolTag.innerHTML.split(" ").forEach(item => { pools.push(item.replace("pool:", "")); });
-					if(copyrightsTag !== null) copyrightsTag.innerHTML.split(" ").forEach(item => { tags.copyrights.push(new Tag(item)); });
-					if(charactersTag !== null) charactersTag.innerHTML.split(" ").forEach(item => { tags.characters.push(new Tag(item)); });
-					if(artistTag !== null) artistTag.innerHTML.split(" ").forEach(item => { tags.artist.push(new Tag(item)); });
-					if(generalTag !== null) generalTag.innerHTML.split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
-					if(metaTag !== null) metaTag.innerHTML.split(" ").forEach(item => { tags.meta.push(new Tag(item)); });
-					resolve(new Art(id, art, that.ruleset.server+doc.querySelector(that.ruleset.elements.art.thumbnail).innerHTML, pools, doc.querySelector("fav-count").innerHTML, new CommentCollection(comments), tags));
+					resolve(that.parseArtByXMLString(response));
 				}
 			};
 			that.xhr.send();
@@ -124,12 +128,7 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 					let collection = [];
 					if(arts == null) reject("Nobody here but us chickens!");
 					arts.forEach(art => {
-						let artId = art.getElementsByTagName("id")[0].innerHTML;
-						let thumbnails = art.getElementsByTagName("preview-file-url");
-						if(thumbnails.length === 1) {
-							let thumbnail = thumbnails[0].innerHTML;
-							collection.push(new Art( artId, that.ruleset.server+that.ruleset.art.replace("%ID%", artId), that.ruleset.server+thumbnail, null, null, null));
-					    }
+						collection.push(that.parseArtByXMLString(art.outerHTML));
 					});
 					that.xhr = new XMLHttpRequest();
 					resolve(new ArtCollection(1, collection));

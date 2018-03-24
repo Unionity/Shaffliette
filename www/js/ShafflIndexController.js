@@ -15,7 +15,12 @@ class ShafflIndexController {
 			$("#shaffl-image-view, #shaffl-art-menu").show();
 			$("#shaffl-collection-view, #shaffl-collection-menu").hide();
 			$(".shaffl-main").css("overflow-y", "hidden");
-			let artController = new ShafflArtController(event.target.dataset.id);
+			try {
+			let artController = new ShafflArtController(Object.setPrototypeOf(JSON.parse(decodeURIComponent(event.target.dataset.art)), Art));
+			} catch(e) {
+				alert(e);
+				alert(e.stack);
+			}
 		});
 		$("#shaffl-more").bind("click", () => {
 			this.offset++;
@@ -58,7 +63,8 @@ class ShafflIndexController {
 											<option value='BooruDOMModel'>Danbooru (alternative)</option>
 											<option value='SafeBooruModel'>Safebooru</option>
 									    </optgroup>
-										<option value='ThreeDBooruModel'>3dBooru</option>
+										<!--<option value='KonachanModel'>Konachan</option>
+										<option value='ThreeDBooruModel'>3dBooru</option>-->
 										<option value='XBooruModel'>XBooru</option>
 										<option value='YukkuriModel'>One Yukkuri Place</option>
 										<option value='GelbooruModel'>Gelbooru</option>
@@ -183,22 +189,24 @@ class ShafflIndexController {
 		this.settings.get("model").then(model => {
 		    this.model = eval("new "+model+"();"); //get model from settings and instanciate it
 			$("html").css({cursor: "wait"});
-			this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
-				collection.forEach(art => {
-					window.shafflCache[art.iuid] = art;
+			try {
+				this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
+					this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));
+					this.init();
+					$('#shaffl-search').autocomplete({
+						minLegth: 1,
+						source: (request, resolve) => {
+							this.model.autocomplete(request.term).then(result => {
+								resolve(result);
+							});
+						}
+					});
+					$("html").css({cursor: "unset"});
 				});
-				this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));
-				this.init();
-				$('#shaffl-search').autocomplete({
-					minLegth: 1,
-					source: (request, resolve) => {
-						this.model.autocomplete(request.term).then(result => {
-							resolve(result);
-						});
-					}
-				});
-				$("html").css({cursor: "unset"});
-			});
+			} catch(e) {
+				alert(e);
+				alert(e.stack);
+			}
 		});
 	}
 }

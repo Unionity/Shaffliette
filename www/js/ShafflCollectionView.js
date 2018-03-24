@@ -8,7 +8,7 @@ class ShafflCollectionView {
 		this.el.attr("data-model", "ShafflIndexView");
 		if(!append) this.el.html("");
 		this.collection.collection.forEach(art => {
-			let html = `<img src="${art.thumbUrl}" data-id="${art.id}" class="shaffl-art--thumb" />`;
+			let html = `<img src="${art.thumbUrl}" data-id="${art.id}" data-art='${JSON.stringify(art).replace(/'/g, "%27")}' class="shaffl-art--thumb" />`;
 			that.el.append(html);
 		});
 	}
