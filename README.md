@@ -12,15 +12,7 @@ Shaffliette (or for short Shaffl) is lightweight (3MB installed/1MB gzipped) ope
 - [ ] &nbsp;&nbsp;More image information
 
 ### Compatability table
-| Booru            | List view | Art view | Comment view | Favourite |
-|------------------|-----------|----------|--------------|-----------|
-| Danbooru         | Yes       | Yes      | Yes          | No        |
-| Gelbooru         | Yes       | Yes      | No           | No        |
-| XBooru           | Yes       | Yes      | No           | No        |
-| 3DBooru          | Yes       | No       | No           | No        |
-| One Yukkuri Place| Yes       | Yes      | No           | No        |
-| Konachan         | Yes       | No       | No           | No        |
-| e621            | No        | No       | No           | No        |
+![compatability](https://github.com/moemoesoft/Shaffliette/blob/master/Compatability.png?raw=true)
 
 
 [license_badge]: https://img.shields.io/badge/license-BSD%202--Clause-blue.svg?style=flat-square
