@@ -106,6 +106,7 @@ class ShafflArtController {
 		$("#shaffl-status").text("Loading");
 		let xhr = new XMLHttpRequest();
 		xhr.open("GET", this.art.url, true);
+		xhr.setRequestHeader("Server", "Shaffl Media Server");
 		xhr.responseType = "blob";
 		xhr.onreadystatechange = () => {
 			if(xhr.readyState === XMLHttpRequest.DONE) {

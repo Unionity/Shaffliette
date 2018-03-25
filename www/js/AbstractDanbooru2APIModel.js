@@ -29,6 +29,7 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 						misc: "tag-string-general",
 						meta: "tag-string-meta"
 					},
+					banned: "is-banned",
 					comments: null
 				}
 			}
@@ -64,6 +65,10 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 		let tags = {copyrights: [], artist: [], characters: [], misc: [], meta: []};
 		let comments = [];
 		let pools = [];
+		if(doc.querySelector(this.ruleset.elements.art.full) == null) {
+			if(doc.querySelector(this.ruleset.elements.art.banned).innerHTML === "true") throw new Error("Image is banned!");
+			throw new Error("Image is inaccessible!");
+		}
 		if(doc.querySelector(this.ruleset.elements.art.full).innerHTML.substr(0, 1) === "/") {
 			art = this.ruleset.server+doc.querySelector(this.ruleset.elements.art.full).innerHTML;
 		} else {
@@ -128,7 +133,12 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 					let collection = [];
 					if(arts == null) reject("Nobody here but us chickens!");
 					arts.forEach(art => {
-						collection.push(that.parseArtByXMLString(art.outerHTML));
+						try {
+						    collection.push(that.parseArtByXMLString(art.outerHTML));
+						} catch(e) {
+							if(e.message === "Image is banned!") console.warn("Some images on this page are banned, therefore can't be displayed"); return;
+							window.plugins.toast.hide(); console.warn("Some images on this page could not be displayed :(");
+						}
 					});
 					that.xhr = new XMLHttpRequest();
 					resolve(new ArtCollection(1, collection));

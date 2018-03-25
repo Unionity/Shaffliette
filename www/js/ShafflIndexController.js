@@ -60,15 +60,16 @@ class ShafflIndexController {
 									<label>Default source: </label><select onchange='new Settings().set(\"model\", this.value).then(() => { console.log(\"settings saved\"); });' >
 									    <optgroup label='Danbooru'>
 										    <option value='BooruModel'>Danbooru</option>
-											<option value='BooruDOMModel'>Danbooru (alternative)</option>
 											<option value='SafeBooruModel'>Safebooru</option>
 									    </optgroup>
+										<!--<option value='HypnoModel'>HypnoHub</option>-->
 										<option value='KonachanModel'>Konachan</option>
+										<option value='UberModel'>Überbooru</option>
 										<!--<option value='ThreeDBooruModel'>3dBooru</option>-->
 										<option value='XBooruModel'>XBooru</option>
 										<option value='YukkuriModel'>One Yukkuri Place</option>
 										<option value='GelbooruModel'>Gelbooru</option>
-										<!--<option value='YandereJSONModel'>Yande.re</option>-->
+										<option value='YandereModel'>Yande.re</option>
 									</select><br/>
 									<label>Browsing History: </label><select readonly onchange='new Settings().set(\"model\", this.value).then(() => { console.log(\"settings saved\"); });' >
 									    <option value='preserve'>Enable</option>
@@ -77,7 +78,7 @@ class ShafflIndexController {
 									<section id=shaffl-settingsDialog--history>
 									</section>
 									<br/><hr/>
-									<a href='about.html' class='hotblack'>Shaffl version: v0.0.1.5-pre Mobile Edition (26.03.18)</a>
+									<a href='about.html' class='hotblack'>Shaffl version: v0.0.1.5.3-pre Mobile Edition (26.03.18)</a>
 								</dialog>`);
 		    $("dialog").dialog({resizable: false, modal: true, draggable: false, show: {effect: "blind", duration: 500}, height: "auto", width: 400});
 			let db = openDatabase("Shaffl_Settings", "1", "Shaffl settings.", 9007199254740991);
@@ -184,24 +185,21 @@ class ShafflIndexController {
 		this.settings.get("model").then(model => {
 		    this.model = eval("new "+model+"();"); //get model from settings and instanciate it
 			$("html").css({cursor: "wait"});
-			try {
-				this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
-					this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));
-					this.init();
-					$('#shaffl-search').autocomplete({
-						minLegth: 1,
-						source: (request, resolve) => {
-							this.model.autocomplete(request.term).then(result => {
-								resolve(result);
-							});
-						}
-					});
-					$("html").css({cursor: "unset"});
+			this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
+				this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));
+				this.init();
+				$('#shaffl-search').autocomplete({
+					minLegth: 1,
+					source: (request, resolve) => {
+						this.model.autocomplete(request.term).then(result => {
+							resolve(result);
+						});
+					}
 				});
-			} catch(e) {
-				alert(e);
-				alert(e.stack);
-			}
+				$("html").css({cursor: "unset"});
+			}).catch(e => {
+				console.error(`Error, while retrieving art list: ${e.message}\nStack trace:\n${e.stack}`);
+			});
 		});
 	}
 }
