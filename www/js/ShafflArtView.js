@@ -6,7 +6,7 @@ class ShafflArtView {
 	render(append) {
 		this.el.attr("data-model", "ShafflArtView");
 		if(!append) this.el.html("");
-		this.el.append("<div id=\"shaffl-bgblur\" ></div><center class=\"shaffl-art-view\"><img id=\"shaffl-art-image\" /></center>");
+		this.el.append("<div id=\"shaffl-bgblur\" ></div><center class=\"shaffl-art-view\"><div class=\"shaffl-loader\"></div><img id=\"shaffl-art-image\" /></center>");
 		//$(".shaffl-image-info--brief").html("<em>"+this.art.tags.characters.join(" and ")+"</em> (<em>"+this.art.tags.copyrights.join(" and ")+"</em>)"+" drawn by <em>"+this.art.tags.artist.join(" and ")+"</em>");
 		$(".shaffl-image-info--tags, .shaffl-image-info--comments").html("");
 		if(typeof this.art.tags.copyrights !== "undefined") {

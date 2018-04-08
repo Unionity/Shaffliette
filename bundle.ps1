@@ -38,6 +38,7 @@ Get-Content www/js/SafeBooruModel.js | Out-File -filepath www/js/bundle.js -Enco
 Get-Content www/js/GelbooruModel.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/DownloadManager.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/ShafflCollectionView.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
+Get-Content www/js/ShafflCommentsView.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/ShafflArtView.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/ShafflIndexController.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/ShafflArtController.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
