@@ -103,7 +103,7 @@ class ShafflArtController {
 	}
 	init() {
 		this.view.render(false);
-		$("#shaffl-status").text("Loading");
+		$(".shaffl-loader").show();
 		let xhr = new XMLHttpRequest();
 		xhr.open("GET", this.art.url, true);
 		xhr.setRequestHeader("Server", "Shaffl Media Server");
@@ -116,6 +116,7 @@ class ShafflArtController {
 					$("#shaffl-art-image").attr("src", image);
 					$("#shaffl-bgblur").get(0).style = "background-image: url("+image+");";
 					$(".shaffl-actionButton").css({visibility: "visible"});
+                    $(".shaffl-loader").hide();
 					this.log();
 					$("#shaffl-status").text("Ready");
 				} else {

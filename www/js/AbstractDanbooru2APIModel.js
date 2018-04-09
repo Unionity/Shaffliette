@@ -62,6 +62,7 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 	parseArtByXMLString(string) {
 		let doc = new DOMParser().parseFromString(string, "application/xml");
 		let art;
+        let thumb;
 		let tags = {copyrights: [], artist: [], characters: [], misc: [], meta: []};
 		let comments = [];
 		let pools = [];
@@ -69,7 +70,10 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 			if(doc.querySelector(this.ruleset.elements.art.banned).innerHTML === "true") throw new Error("Image is banned!");
 			throw new Error("Image is inaccessible!");
 		}
-		art = doc.querySelector(this.ruleset.elements.art.full).innerHTML;
+        art = doc.querySelector(this.ruleset.elements.art.full).innerHTML;
+        thumb = doc.querySelector(this.ruleset.elements.art.thumbnail).innerHTML;
+		if(art.substr(0, 1) === "/") art = this.ruleset.server+art;
+        if(thumb.substr(0, 1) === "/") thumb = this.ruleset.server+thumb;
 		if(!art) reject("Bad response");
 		let poolTag = doc.querySelector(this.ruleset.elements.art.pools),
 			copyrightsTag = doc.querySelector(this.ruleset.elements.art.tags.copyrights),
@@ -84,7 +88,7 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 		if(artistTag !== null) artistTag.innerHTML.split(" ").forEach(item => { tags.artist.push(new Tag(item)); });
 		if(generalTag !== null) generalTag.innerHTML.split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
 		if(metaTag !== null) metaTag.innerHTML.split(" ").forEach(item => { tags.meta.push(new Tag(item)); });
-		return new Art(id, art, doc.querySelector(this.ruleset.elements.art.thumbnail).innerHTML, pools, doc.querySelector("fav-count").innerHTML, new CommentCollection(comments), tags);
+		return new Art(id, art, thumb, pools, doc.querySelector("fav-count").innerHTML, new CommentCollection(comments), tags);
 	}
 	getArtById(id = 1) {
 		let that = this;

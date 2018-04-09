@@ -78,7 +78,7 @@ class ShafflIndexController {
 									<section id=shaffl-settingsDialog--history>
 									</section>
 									<br/><hr/>
-									<a href='about.html' class='hotblack'>Shaffl version: v0.0.1.5.3-pre Mobile Edition (26.03.18)</a>
+									<a href='about.html' class='hotblack'>Shaffl version: v0.0.1.5.4-pre Mobile Edition (26.03.18)</a>
 								</dialog>`);
 		    $("dialog").dialog({resizable: false, modal: true, draggable: false, show: {effect: "blind", duration: 500}, height: "auto", width: 400});
 			let db = openDatabase("Shaffl_Settings", "1", "Shaffl settings.", 9007199254740991);
