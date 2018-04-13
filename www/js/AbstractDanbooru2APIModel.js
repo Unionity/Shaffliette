@@ -1,5 +1,5 @@
 class AbstractDanbooru2APIModel extends AbstractModel {
-	constructor(server, search = "/posts.xml?utf8=✓&tags=%SEARCH_STRING%") {
+	constructor(server, search = "/posts.xml?tags=%SEARCH_STRING%") {
 		super();
 		this.ruleset = {
 			server: server,
