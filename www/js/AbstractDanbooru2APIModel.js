@@ -6,6 +6,7 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 			search: search,
 			page: "&page=%PAGE%",
 			art: "/posts/%ID%.xml",
+            comments: "/comments.xml?group_by=comment&search[post_id]=%ID%",
 			wikipage: "/wiki_pages/%TAG%",
 			autocomplete: "/tags/autocomplete.json?search[name_matches]=%SEARCH_STRING%",
 			pool: "/pools/%ID%.xml",
@@ -29,9 +30,17 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 						misc: "tag-string-general",
 						meta: "tag-string-meta"
 					},
-					banned: "is-banned",
-					comments: null
-				}
+					banned: "is-banned"
+				},
+                comments: {
+                    base: "comment",
+                    score: "score",
+                    creator: "creator-name",
+                    updater: "updater-name",
+                    time: "created-at",
+                    id: "id",
+                    body: "body"
+                }
 			}
 		};
 	}
@@ -90,6 +99,13 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 		if(metaTag !== null) metaTag.innerHTML.split(" ").forEach(item => { tags.meta.push(new Tag(item)); });
 		return new Art(id, art, thumb, pools, doc.querySelector("fav-count").innerHTML, new CommentCollection(comments), tags);
 	}
+    parseCommentByXMLString(string) {
+        let doc = new DOMParser().parseFromString(string, "application/xml");
+        let creator = doc.querySelector(this.ruleset.elements.comments.creator).innerHTML+" ("+doc.querySelector(this.ruleset.elements.comments.updater).innerHTML+")";
+        let body = doc.querySelector(this.ruleset.elements.comments.body).innerHTML;
+        let time = moment(doc.querySelector(this.ruleset.elements.comments.time).innerHTML).fromNow();
+        return new Comment(creator, time, body);
+    }
 	getArtById(id = 1) {
 		let that = this;
 		return new Promise((resolve, reject) => {
@@ -147,9 +163,31 @@ class AbstractDanbooru2APIModel extends AbstractModel {
 			that.xhr.send();
 		});
 	}
-	_getWikiPageByTag(tag) {
-		return new Promise((resolve, reject) => {
-			resolve(this.ruleset.server+this.ruleset.wikipage.replace("%TAG%", tag));
+    getCommentCollectionById(post) {
+        return new Promise((resolve, reject) => {
+			this.xhr.open("GET", this.ruleset.server+this.ruleset.comments.replace("%ID%", post));
+            this.xhr.onreadystatechange = () => {
+                if(this.xhr.readyState === XMLHttpRequest.DONE) {
+                    let response = this.xhr.responseText;
+                    let doc = new DOMParser().parseFromString(response, "application/xml");
+                    if(this.xhr.status!==200) {
+                        this.xhr = new XMLHttpRequest();
+                        if(doc.querySelector(this.ruleset.elements.error) == null) reject("Bad response");
+                        reject(doc.querySelector(this.ruleset.elements.error).innerText);
+                    }
+                    let comments = doc.querySelectorAll(this.ruleset.elements.comments.base);
+                    let collection = [];
+                    comments.forEach(comment => {
+                        collection.push(this.parseCommentByXMLString(comment.outerHTML));
+                    });
+                    this.xhr = new XMLHttpRequest();
+                    resolve(new CommentCollection(collection));
+                }
+            };
+			this.xhr.send();
 		});
+    }
+	_getWikiPageByTag(tag) {
+		return new Promise(resolve => resolve(this.ruleset.wikipage.replace("%TAG%", tag)));
 	}
 }

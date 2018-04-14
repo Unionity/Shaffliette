@@ -125,14 +125,21 @@ class ShafflArtController {
 			}
 		};
 		xhr.send();
+        this.model.getCommentCollectionById(this.id).then(comments => {
+            new ShafflCommentsView(comments, $(".sahffl-image-info--comments")).render(false);
+        });
 		this.addListeners();
 	}
 	constructor(art) {
 		$("html").css({cursor: "wait"});
-		this.art = art;
-		this.id = art.id;
-		this.view = new ShafflArtView(art, $(".shaffl-image-container"));
-		this.init();
-		$("html").css({cursor: "unset"});
+        this.settings = new Settings();
+        this.settings.get("model").then(model => {
+            this.model = eval("new "+model+"();");
+            this.art = art;
+            this.id = art.id;
+            this.view = new ShafflArtView(art, $(".shaffl-image-container"));
+            this.init();
+            $("html").css({cursor: "unset"});
+        });
 	}
 }

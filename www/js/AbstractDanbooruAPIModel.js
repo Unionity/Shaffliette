@@ -67,6 +67,14 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 		doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.tags.misc).split(" ").forEach(item => { tags.misc.push(new Tag(item)); });
 		return new Art(doc.querySelector(this.ruleset.elements.arts.base).getAttribute("id"), art, doc.querySelector(this.ruleset.elements.arts.base).getAttribute(this.ruleset.elements.art.thumbnail), null, null, null, tags);
 	}
+    parseCommentByXMLString(string) {
+        let doc = new DOMParser().parseFromString(string, "application/xml");
+        let comment = doc.querySelector(this.ruleset.elements.comments.base);
+        let creator = comment.getAttribute(this.ruleset.elements.comments.creator);
+        let body = comment.getAttribute(this.ruleset.elements.comments.body);
+        let time = moment(comment.getAttribute(this.ruleset.elements.comments.time)).fromNow();
+        return new Comment(creator, time, body);
+    }
 	getArtById(id = 1) {
 		let that = this;
 		return new Promise((resolve, reject) => {
@@ -118,4 +126,8 @@ class AbstractDanbooruAPIModel extends AbstractModel {
 			that.xhr.send();
 		});
 	}
+    getCommentCollectionById(post) {
+        console.warn("Unimplemented!");
+        return new Promise(resolve => resolve(new CommentCollection([])));
+    }
 }
