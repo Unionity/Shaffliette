@@ -9,10 +9,19 @@ class AbstractXMLModel {
     
     _normalizeURL(url) {
         if(url.substring(0, 1) === "/") {
-            if(url.substring(0, 2) === "//") return url.replace("//", "http://");
+            if(url.substring(0, 2) === "//") return url.replace("//", this.ruleset.server.match(/htt(p|ps):\/\//g)[0]);
             return this.ruleset.server + url;
         }
         return url;
+    }
+    
+    _parseCommentByXMLString(string) {
+        let doc = new DOMParser().parseFromString(string, "application/xml");
+        let parseTagFromRuleset = tag => tag[1] ? parseTagFromRuleset(tag[0]) === null ? null : parseTagFromRuleset(tag[0]).textContent : parseTagFromRuleset(this.ruleset.elements.art.base).getAttribute(tag[0]);
+        let creator = parseTagFromRuleset(this.ruleset.elements.comments.creator)+" ("+parseTagFromRuleset(this.ruleset.elements.comments.updater)+")";
+        let body = parseTagFromRuleset(this.ruleset.elements.comments.body);
+        let time = moment(parseTagFromRuleset(this.ruleset.elements.comments.time)).fromNow();
+        return new Comment(creator, time, body);
     }
     
     _parsePostFromXMLString(xmlString) {
@@ -44,7 +53,7 @@ class AbstractXMLModel {
         return new Art(id, image, thumb, pools, doc.querySelector("fav-count").textContent, null, tags);
     }
     
-    _parseArtCollectionFromDocument(doc) {
+    _parseArtCollectionByDocument(doc) {
         let posts = doc.querySelectorAll(this.ruleset.elements.art.base);
         if(posts === null) return new ArtCollection([]);
         let collection = [];
@@ -58,6 +67,33 @@ class AbstractXMLModel {
         return new ArtCollection(collection);
     }
     
+    _parseCommentCollectionByDocument(doc) {
+        let comments = doc.querySelectorAll(this.ruleset.elements.comments.base);
+        if(comments === null) return new CommentCollection([]);
+        let collection = [];
+        comment.forEach(post => {
+            try {
+                collection.push(this._parseCommentFromXMLString(comment.outerHTML));
+            } catch(ex) {
+                console.warn(`Could not parse comment, therefore it has been skipped. The parser reported an error: ${ex.message}`);
+            }
+        });
+        return new CommentCollection(collection);
+    }
+    
+    async getCommentCollectionById(post) {
+        let url = _normalizeURL(this.ruleset.comments.replace("%id%", post));
+        this.xhr.open("GET", url);
+        this.xhr.onreadystatechange = () => {
+            if(this.xhr.readyState === XMLHttpRequest.DONE) {
+                if(this.xhr.status !== 200) return this._handleError(response);
+                let response = new DOMParser().parseFromString(this.xhr.responseText, "application/xml");
+                return this._parseCommentCollectionByDocument(response);
+            }
+        }
+        this.xhr.send();
+    }
+    
     async getArtCollectionByTags(tags, page = 1) {
         let tags;
         if(tag instanceof Tag) {
@@ -68,14 +104,14 @@ class AbstractXMLModel {
             throw new Error("Tags is not a collection or tag!");
         }
         //if(tags.split(" ")[0].substring(0, 1) === ":") return getArtCollectionByCommand(tags.split(" ")[0]);
-        if(search === null) return new CommentCollection([]);
+        if(search === null) return new ArtCollection([]);
         let url = _normalizeURL(this.ruleset.search.replace("%tags%", tags).replace("%page%", page));
         this.xhr.open("GET", url);
         this.xhr.onreadystatechange = () => {
             if(this.xhr.readyState === XMLHttpRequest.DONE) {
                 if(this.xhr.status !== 200) return this._handleError(response);
                 let response = new DOMParser().parseFromString(this.xhr.responseText, "application/xml");
-                return this._parseArtCollectionDocument(response);
+                return this._parseArtCollectionByDocument(response);
             }
         }
         this.xhr.send();
