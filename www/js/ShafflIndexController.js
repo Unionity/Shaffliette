@@ -182,8 +182,9 @@ class ShafflIndexController {
 			}
 		}
 		this.settings = new Settings();
-		this.settings.get("model").then(model => {
-		    this.model = eval("new "+model+"();"); //get model from settings and instanciate it
+		this.settings.getModelXML().then(model => {
+		    this.model = new AbstractXMLModel(model);
+            console.log(this.model);
 			$("html").css({cursor: "wait"});
 			this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
 				this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));

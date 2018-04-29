@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<html lang="en">
+  <head>
+    <script src="cordova.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src * blob:;style-src * 'self' 'unsafe-inline' 'unsafe-eval';script-src * 'self' 'unsafe-inline' 'unsafe-eval';"/>
+    <link rel="stylesheet" href="assets/styles/reset.css"/>
+    <link rel="stylesheet" href="assets/styles/index.css"/>
+    <link rel="stylesheet" href="assets/styles/color.css"/>
+    <link rel="stylesheet" href="assets/styles/tags.css"/>
+    <link rel="stylesheet" href="assets/styles/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="assets/styles/jquery-ui.structure.min.css"/>
+    <link rel="stylesheet" href="assets/styles/jquery-ui.theme.min.css"/>
+    <script src="js/bundle.js"></script>
+    <title>Shaffl</title>
+  </head>
+  <body>
+    <section id="shaffl-moreActions--menu">
+      <ul>
+        <li id="shaffl-update" onclick="window.location.reload(true);" class="shaffl-contextmenu-item">Force update</li>
+        <li id="shaffl-selectAll" class="shaffl-contextmenu-item">Select all</li>
+        <li id="shaffl-unselectAll" class="shaffl-contextmenu-item">Unselect all</li>
+        <li id="shaffl-invertChoice" class="shaffl-contextmenu-item">Invert choice</li>
+        <hr/>
+        <li id="shaffl-downloadSelected" class="shaffl-contextmenu-item"><img src="assets/imgs/icons/download.png"/>Download selected...</li>
+        <li id="shaffl-downloadAll" class="shaffl-contextmenu-item"><img src="assets/imgs/icons/download.png"/>Download all on this page...</li>
+        <hr/>
+        <li id="shaffl-settings" class="shaffl-contextmenu-item"><img src="assets/imgs/icons/settings.png"/>Settings</li>
+      </ul>
+    </section>
+    <header class="shaffl-header hotblack-bg"><img src="assets/imgs/Shaffl.png" class="shaffl-logo"/><img id="shaffl-back" src="assets/imgs/Shaffl.png"/>
+      <section id="shaffl-collection-menu" class="shaffl-menu"><img id="shaffl-moreActions" src="assets/imgs/icons/more.png"/>
+        <input id="shaffl-search" type="search" autocomplete="off"/>
+      </section>
+      <section id="shaffl-art-menu" class="shaffl-menu"><img id="shaffl-moreInfo" src="assets/imgs/icons/info.png" class="shaffl-actionButton"/><img id="shaffl-share" src="assets/imgs/icons/share.png" class="shaffl-actionButton"/><img id="shaffl-download" src="assets/imgs/icons/download.png" class="shaffl-actionButton"/><img id="shaffl-copyImage" src="assets/imgs/icons/clipboard.png" class="shaffl-actionButton"/></section>
+    </header>
+    <main class="shaffl-main">
+      <article id="shaffl-collection-view">
+        <center>
+          <article class="shaffl-collection-view"></article><em><ins id="shaffl-more">More</ins></em>
+        </center>
+      </article>
+      <article id="shaffl-image-view"><img id="shaffl-previous" src="assets/imgs/icons/previous.png" class="shaffl-navigatorButton"/><img id="shaffl-next" src="assets/imgs/icons/next.png" class="shaffl-navigatorButton"/>
+        <article class="shaffl-image-container"></article>
+        <article class="shaffl-image-info">
+          <h2 class="shaffl-image-info--brief"></h2>
+          <h2 class="shaffl-image-info--tags---title">Tags</h2>
+          <ul class="shaffl-image-info--tags"></ul>
+          <div data-category="special" class="shaffl-tag">
+            <div class="shaffl-tag--category"><img src="assets/imgs/icons/tags/special.png"/></div><span>Favourited <strong class="shaffl-image-info--favs">-1</strong> times</span>
+          </div>
+          <hr/>
+          <h2>Comments</h2>
+          <section class="sahffl-image-info--comments">
+            <div class="shaffl-loader">
+          </section>
+        </article>
+      </article>
+    </main>
+    <footer class="shaffl-footer hotblack-bg">
+      <p id="shaffl-status">Ready</p>
+    </footer>
+    <script>
+        if(localStorage.installed == "yes") {
+            document.addEventListener("deviceready", () => {var controller = new ShafflIndexController();}, false);
+        } else {
+            window.location.href = "setup.html";
+        }
+    </script>
+  </body>
+</html>

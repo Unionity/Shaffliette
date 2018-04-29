@@ -11,6 +11,5 @@ jquery*
 .bithoundrc
 bundle.js
 bundle.bat
-www/index.html
-www/about.html
 page-lock.json
+/nbproject/private/

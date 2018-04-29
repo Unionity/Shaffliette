@@ -133,8 +133,8 @@ class ShafflArtController {
 	constructor(art) {
 		$("html").css({cursor: "wait"});
         this.settings = new Settings();
-        this.settings.get("model").then(model => {
-            this.model = eval("new "+model+"();");
+        this.settings.getModelXML().then(model => {
+            this.model = new AbstractXMLModel(model);
             this.art = art;
             this.id = art.id;
             this.view = new ShafflArtView(art, $(".shaffl-image-container"));

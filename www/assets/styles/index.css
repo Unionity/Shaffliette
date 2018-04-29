@@ -1,28 +1,28 @@
 @keyframes spinner {
   0% {
     transform: rotate(0deg);
-    border-top: 10 #2b2b2b solid;
-    border-bottom: 10 transparent solid;
-    border-left: 10 transparent solid;
-    border-right: 10 transparent solid;
+    border-top: 10px #2b2b2b solid;
+    border-bottom: 10px transparent solid;
+    border-left: 10px transparent solid;
+    border-right: 10px transparent solid;
   }
   25% {
-    border-top: 10 transparent solid;
-    border-right: 10 #2b2b2b solid;
-    border-bottom: 10 transparent solid;
-    border-left: 10 transparent solid;
+    border-top: 10px transparent solid;
+    border-right: 10px #2b2b2b solid;
+    border-bottom: 10px transparent solid;
+    border-left: 10px transparent solid;
   }
   50% {
-    border-top: 10 transparent solid;
-    border-right: 10 transparent solid;
-    border-bottom: 10 #2b2b2b solid;
-    border-left: 10 transparent solid;
+    border-top: 10px transparent solid;
+    border-right: 10px transparent solid;
+    border-bottom: 10px #2b2b2b solid;
+    border-left: 10px transparent solid;
   }
   75% {
-    border-top: 10 transparent solid;
-    border-right: 10 transparent solid;
-    border-bottom: 10 transparent solid;
-    border-left: 10 #2b2b2b solid;
+    border-top: 10px transparent solid;
+    border-right: 10px transparent solid;
+    border-bottom: 10px transparent solid;
+    border-left: 10px #2b2b2b solid;
   }
   100% {
     transform: rotate(360deg);
@@ -79,10 +79,10 @@
 .shaffl-image-info ul {
 	list-style: none;
 	margin: 0;
-    padding: 10;
+    padding: 10px;
 }
 .shaffl-contextmenu-item {
-	padding: 10;
+	padding: 10px;
 }
 .shaffl-contextmenu-item > img {
 	vertical-align: middle;
@@ -102,7 +102,7 @@
 	height: 100%;
 }
 .shaffl-art--thumb {
-	margin: 10;
+	margin: 10px;
 	vertical-align: middle;
 	cursor: pointer;
 	transition: transform, border-width .2s ease-in-out;
@@ -114,7 +114,7 @@
 }
 .shaffl-art-desc {
 	display: inline-block;
-    margin: 10;
+    margin: 10px;
 }
 .shaffl-art--thumb---id {
 	font-size: larger;
@@ -130,7 +130,7 @@
     background-color: lightgrey;
     color: #2b2b2b;
     padding-left: 5px;
-    border-radius: 10 0 0 10;
+    border-radius: 10px 0 0 10px;
 }
 .comment {
     padding: 5px;
@@ -157,7 +157,7 @@
   max-width: 95vw;
 }
 .shaffl-loader {
-  border: 10 transparent solid;
+  border: 10px transparent solid;
   border-radius: 50%;
   width: 68px;
   height: 68px;
@@ -187,7 +187,7 @@
 	width: 100%;
 	height: 100%;
 	background-size: cover;
-	filter: blur(110);
+	filter: blur(110px);
 }
 #shaffl-search {
 	float: right;
@@ -214,7 +214,7 @@
 	position: fixed;
 	background: #2b2b2b;
 	top: 10%;
-	right: 10;
+	right: 10px;
 	padding: 5px;
 	border-radius: 0 0 5px 5px;
 	color: #efefef;
@@ -250,11 +250,11 @@
 #shaffl-downloadingDialog progress[value]::-webkit-progress-bar {
   background-color: #eee;
   border: 1px #000 solid;
-  border-radius: 10;
+  border-radius: 10px;
   padding: 2px;
 }
 #shaffl-downloadingDialog progress[value]::-webkit-progress-value {
   background-color: #2b2b2b;
-  border-radius: 10;
+  border-radius: 10px;
   transition: width .2s ease-in-out;
 }
