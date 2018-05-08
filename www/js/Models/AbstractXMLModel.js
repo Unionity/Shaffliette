@@ -28,7 +28,6 @@ class AbstractXMLModel {
         let doc = new DOMParser().parseFromString(xmlString, "application/xml");
         let parseTagFromRuleset = tag => tag === null ? null : tag[1] ? doc.querySelector(tag[0]) === null ? null : doc.querySelector(tag[0]).textContent : doc.querySelector(this.ruleset.elements.art.base).getAttribute(tag[0]);
         let tags = {copyrights: [], artist: [], characters: [], misc: [], meta: []};
-        let comments = [];
         let pools = [];
         if(parseTagFromRuleset(this.ruleset.elements.art.full) === null) {
             if(parseTagFromRuleset(this.ruleset.elements.art.banned) === "true") throw new Error("Image is banned!");
@@ -82,7 +81,7 @@ class AbstractXMLModel {
     }
     
     getCommentCollectionById(post) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             let url = this._normalizeURL(this.ruleset.comments.replace("%id%", post));
             this.xhr.open("GET", url);
             this.xhr.onreadystatechange = () => {
