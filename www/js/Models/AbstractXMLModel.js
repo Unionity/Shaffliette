@@ -24,6 +24,17 @@ class AbstractXMLModel {
         return new Comment(creator, time, body);
     }
     
+    _parseNoteFromXMLString(xmlString) {
+        let doc = new DOMParser().parseFromString(xmlString, "application/xml");
+        let parseTagFromRuleset = tag => tag === null ? null : tag[1] ? doc.querySelector(tag[0]) === null ? null : doc.querySelector(tag[0]).textContent : doc.querySelector(this.ruleset.elements.notes.base).getAttribute(tag[0]);
+        let x = parseTagFromRuleset(this.ruleset.elements.notes.x),
+            y = parseTagFromRuleset(this.ruleset.elements.notes.y),
+            w = parseTagFromRuleset(this.ruleset.elements.notes.w),
+            h = parseTagFromRuleset(this.ruleset.elements.notes.h),
+            d = parseTagFromRuleset(this.ruleset.elements.notes.body);
+        return new Note(x, y, w, h, d);
+    }
+    
     _parsePostFromXMLString(xmlString) {
         let doc = new DOMParser().parseFromString(xmlString, "application/xml");
         let parseTagFromRuleset = tag => tag === null ? null : tag[1] ? doc.querySelector(tag[0]) === null ? null : doc.querySelector(tag[0]).textContent : doc.querySelector(this.ruleset.elements.art.base).getAttribute(tag[0]);
@@ -80,6 +91,35 @@ class AbstractXMLModel {
         return new CommentCollection(collection);
     }
     
+    _parseNoteCollectionByDocument(doc) {
+        let notes = doc.querySelectorAll(this.ruleset.elements.notes.base);
+        if(notes === null) return new NoteCollection([]);
+        let collection = [];
+        notes.forEach(note => {
+            try {
+                collection.push(this._parseNoteFromXMLString(note.outerHTML));
+            } catch(ex) {
+                console.warn(`Could not parse note, therefore it has been skipped. The parser reported an error: ${ex.message}`);
+            }
+        });
+        return new NoteCollection(collection);
+    }
+    
+    getNoteCollectionById(post) {
+        return new Promise((resolve) => {
+            let url = this._normalizeURL(this.ruleset.notes.replace("%id%", post));
+            this.xhr.open("GET", url);
+            this.xhr.onreadystatechange = () => {
+                if(this.xhr.readyState === XMLHttpRequest.DONE) {
+                    if(this.xhr.status !== 200) resolve(this._handleError(response));
+                    let response = new DOMParser().parseFromString(this.xhr.responseText, "application/xml");
+                    resolve(this._parseNoteCollectionByDocument(response));
+                }
+            }
+            this.xhr.send();
+        });
+    }
+    
     getCommentCollectionById(post) {
         return new Promise((resolve) => {
             let url = this._normalizeURL(this.ruleset.comments.replace("%id%", post));
@@ -128,10 +168,12 @@ class AbstractXMLModel {
         let pe = (selector, relativeTo) => relativeTo.querySelector(selector) === null ? null : [relativeTo.querySelector(selector).textContent, relativeTo.querySelector(selector).getAttribute("t") == "element"];
         let getArtCollectionByTags = this.xml.querySelector("methods > getArtCollectionByTags"),
             getCommentsCollectionById = this.xml.querySelector("methods > getCommentsCollectionById"),
+            getNoteCollectionById = this.xml.querySelector("methods > getNoteCollectionById"),
             getWikiPage = this.xml.querySelector("methods > getWikiPage");
         return {
             search: getArtCollectionByTags === null ? null : getArtCollectionByTags.querySelector("url").textContent,
             comments: getCommentsCollectionById === null ? null : getCommentsCollectionById.querySelector("url").textContent,
+            notes: getNoteCollectionById === null ? null : getNoteCollectionById.querySelector("url").textContent,
             wikipage: getWikiPage === null ? null : getWikiPage.querySelector("url").textContent,
             elements: {
                 art: getArtCollectionByTags === null ? null : {
@@ -158,6 +200,17 @@ class AbstractXMLModel {
                     time: pe("time", getCommentsCollectionById),
                     id: pe("id", getCommentsCollectionById),
                     body: pe("body", getCommentsCollectionById)
+                },
+                notes: getNoteCollectionById === null ? null : {
+                    base: getNoteCollectionById.querySelector("base-node").textContent,
+                    w: pe("w", getNoteCollectionById),
+                    h: pe("h", getNoteCollectionById),
+                    x: pe("x", getNoteCollectionById),
+                    y: pe("y", getNoteCollectionById),
+                    time: pe("time", getNoteCollectionById),
+                    creator: pe("creator", getNoteCollectionById),
+                    id: pe("id", getNoteCollectionById),
+                    body: pe("body", getNoteCollectionById)
                 }
             }
         };

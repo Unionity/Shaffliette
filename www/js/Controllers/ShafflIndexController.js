@@ -55,42 +55,7 @@ class ShafflIndexController {
 			this.download(false);
 		});
 		$("#shaffl-settings").bind("click", () => {
-			$("body").append(`<dialog id=shaffl-settingsDialog title='Settings'>
-			                        <em>Changes are saved automatically</em><br/>
-									<label>Default source: </label><select onchange='new Settings().set(\"model\", this.value).then(() => { console.log(\"settings saved\"); });' >
-									    <optgroup label='Danbooru'>
-										    <option value='BooruModel'>Danbooru</option>
-											<option value='SafeBooruModel'>Safebooru</option>
-									    </optgroup>
-										<!--<option value='HypnoModel'>HypnoHub</option>-->
-										<option value='KonachanModel'>Konachan</option>
-										<option value='UberModel'>Überbooru</option>
-										<!--<option value='ThreeDBooruModel'>3dBooru</option>-->
-										<option value='XBooruModel'>XBooru</option>
-										<option value='YukkuriModel'>One Yukkuri Place</option>
-										<option value='GelbooruModel'>Gelbooru</option>
-										<option value='YandereModel'>Yande.re</option>
-									</select><br/>
-									<label>Browsing History: </label><select readonly onchange='new Settings().set(\"model\", this.value).then(() => { console.log(\"settings saved\"); });' >
-									    <option value='preserve'>Enable</option>
-										<option value='disable'>Disable</option>
-									</select><hr/>
-									<section id=shaffl-settingsDialog--history>
-									</section>
-									<br/><hr/>
-									<a href='about.html' class='hotblack'>Shaffl version: v0.0.1.5.4-pre Mobile Edition (26.03.18)</a>
-								</dialog>`);
-		    $("dialog").dialog({resizable: false, modal: true, draggable: false, show: {effect: "blind", duration: 500}, height: "auto", width: 400});
-			let db = openDatabase("Shaffl_Settings", "1", "Shaffl settings.", 9007199254740991);
-			if(!db) alert("Database fault");
-			db.transaction(tx => {
-				tx.executeSql("SELECT * FROM shaffl_history ORDER BY \"timestamp\" DESC", [], (tx, res) => {
-					for(let i=0;i<res.rows.length;i++) {
-						$("#shaffl-settingsDialog--history").append("<article onclick='window.open($(this).data(\"url\"), \"_system\");' data-url='"+res.rows[i].url+"' class='shaffl-historyEntry'><p>Art"+res.rows[i].name+"</p><time>"+moment(res.rows[i].timestamp).fromNow()+"</time></article><br/>");
-					}
-				});
-			});
-			$(".ui-dialog-titlebar-close").bind("click", () => { $(".ui-dialog, #shaffl-settingsDialog").remove(); });
+			window.location.href = "settings.html";
 		});
 		$(".shaffl-art--thumb").bind("contextmenu", event => {
 			if(event.target.dataset.selected == "selected") {
@@ -189,14 +154,6 @@ class ShafflIndexController {
 			this.model.getArtCollectionByTags(this.tags, 1).then(collection => {
 				this.view = new ShafflCollectionView(collection, $(".shaffl-collection-view"));
 				this.init();
-				$('#shaffl-search').autocomplete({
-					minLegth: 1,
-					source: (request, resolve) => {
-						this.model.autocomplete(request.term).then(result => {
-							resolve(result);
-						});
-					}
-				});
 				$("html").css({cursor: "unset"});
 			}).catch(e => {
 				console.error(`Error, while retrieving art list: ${e.message}\nStack trace:\n${e.stack}`);

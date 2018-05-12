@@ -32,6 +32,18 @@
 	  <id t="element">id</id>
 	  <body t="element">body</body>
     </getCommentsCollectionById>
+    <getNoteCollectionById>
+      <url>/notes.xml?group_by=note&amp;search[post_id]=%id%</url>
+      <base-node t="element">note</base-node>
+	  <creator t="element">creator-name</creator>
+	  <time t="element">created-at</time>
+	  <id t="element">id</id>
+	  <body t="element">body</body>
+      <x t="element">x</x>
+      <y t="element">y</y>
+      <w t="element">width</w>
+      <h t="element">height</h>
+    </getNoteCollectionById>
     <getWikiPage>
       <url>/wiki_pages/%tag%</url>
     </getWikiPage>

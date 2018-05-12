@@ -1,8 +1,8 @@
 <!DOCTYPE booruparser>
 <extension t="booruparser">
   <meta>
-    <name>Safebooru</name>
-    <base-url>https://danbooru.donmai.us</base-url>
+    <name>Danbooru</name>
+    <base-url>https://safebooru.donmai.us</base-url>
   </meta>
   <methods>
     <getArtCollectionByTags>
@@ -24,7 +24,7 @@
     </getArtCollectionByTags>
     <getCommentsCollectionById>
       <url>/comments.xml?group_by=comment&amp;search[post_id]=%id%</url>
-      <base-node t="element">comment</base>
+      <base-node t="element">comment</base-node>
 	  <score t="element">score</score>
 	  <creator t="element">creator-name</creator>
 	  <updater t="element">updater-name</updater>
@@ -32,6 +32,18 @@
 	  <id t="element">id</id>
 	  <body t="element">body</body>
     </getCommentsCollectionById>
+    <getNoteCollectionById>
+      <url>/notes.xml?group_by=note&amp;search[post_id]=%id%</url>
+      <base-node t="element">note</base-node>
+	  <creator t="element">creator-name</creator>
+	  <time t="element">created-at</time>
+	  <id t="element">id</id>
+	  <body t="element">body</body>
+      <x t="element">x</x>
+      <y t="element">y</y>
+      <w t="element">width</w>
+      <h t="element">height</h>
+    </getNoteCollectionById>
     <getWikiPage>
       <url>/wiki_pages/%tag%</url>
     </getWikiPage>

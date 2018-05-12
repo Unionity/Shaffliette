@@ -29,104 +29,119 @@
   }
 }
 .shaffl-header {
-	height: 10%;
-	box-shadow: rgba(0, 0, 0, 0.14) 0 2px 2px 0, rgba(0, 0, 0, 0.12) 0 3px 1px -2px, rgba(0, 0, 0, 0.2) 0 1px 5px 0;
+    height: 10%;
+    box-shadow: rgba(0, 0, 0, 0.14) 0 2px 2px 0, rgba(0, 0, 0, 0.12) 0 3px 1px -2px, rgba(0, 0, 0, 0.2) 0 1px 5px 0;
 }
 .shaffl-main {
-	height: 90%;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch; 
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch; 
 }
 .shaffl-main[data-image=true] {
-	overflow-y: hidden;
+    overflow-y: hidden;
 }
 .shaffl-header .shaffl-logo {
-	cursor: pointer;
-	max-height: 100%;
+    cursor: pointer;
+    max-height: 100%;
 }
 .shaffl-footer {
-	display: none;
-	/*height: 5%;*/
+    display: none;
+    /*height: 5%;*/
 }
 .shaffl-image-container {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .shaffl-menu {
-	float: right;
+    float: right;
 }
 .shaffl-image-info {
-	overflow-y: scroll;
-	width: 100%;
-	height: 100%;
-	background: #383838;
-	color: #efefef;
-	display: none;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    background: #383838;
+    color: #efefef;
+    display: none;
 }
 .shaffl-navigatorButton {
-	position: fixed;
+    position: fixed;
     top: 49%;
     cursor: pointer;
-	z-index: 999;
-	border: 1px black dashed;
+    z-index: 999;
+    border: 1px black dashed;
     border-radius: 100%;
     background: black;
 }
 .shaffl-image-info h2 {
-	margin: 0;
+    margin: 0;
 }
 .shaffl-image-info ul {
-	list-style: none;
-	margin: 0;
+    list-style: none;
+    margin: 0;
     padding: 10px;
 }
 .shaffl-contextmenu-item {
-	padding: 10px;
+    padding: 10px;
 }
 .shaffl-contextmenu-item > img {
-	vertical-align: middle;
-	padding-right: 5px;
+    vertical-align: middle;
+    padding-right: 5px;
 }
 .shaffl-contextmenu-item:hover {
-	background: #3a3a3a;
+    background: #3a3a3a;
 }
 .shaffl-actionButton {
-	visibility: hidden;
-	float: right;
-	margin: 15px;
-	cursor: pointer;
+    visibility: hidden;
+    float: right;
+    margin: 15px;
+    cursor: pointer;
 }
 .shaffl-art-view {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 .shaffl-art--thumb {
-	margin: 10px;
-	vertical-align: middle;
-	cursor: pointer;
-	transition: transform, border-width .2s ease-in-out;
-	border: 1px solid #000;
-	max-width: 35%;
+    margin: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: transform, border-width .2s ease-in-out;
+    border: 1px solid #000;
+    max-width: 35%;
 }
 .shaffl-art--thumb[data-selected=selected] {
-	border: 2px solid orange;
+    border: 2px solid orange;
+}
+.shaffl-note {
+    display: inline-block;
+    position: absolute;
+    padding: 2pt;
+    margin: 1px;
+    border: 1px solid black;
+    background-color: #ffc;
+    opacity: .6;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-shadow: 0px 1px black; /*makes text bolder*/
+}
+.shaffl-note[style="left: 0px; top: 0px; width: 0px; height: 0px;"] {
+    visibility: hidden;
 }
 .shaffl-art-desc {
-	display: inline-block;
+    display: inline-block;
     margin: 10px;
 }
 .shaffl-art--thumb---id {
-	font-size: larger;
+    font-size: larger;
 }
 .shaffl-art--thumb--metadata {
-	font-size: small;
+    font-size: small;
 }
 .shaffl-art--thumb--status {
-	color: #fff;
+    color: #fff;
 }
 .shaffl-art--thumb--time {
-	float: right;
+    float: right;
     background-color: lightgrey;
     color: #2b2b2b;
     padding-left: 5px;
@@ -138,17 +153,17 @@
     border: 1px solid #fff;
 }
 .shaffl-historyEntry {
-	border: 0 transparent solid;
-	border-bottom: 1px solid: #000;
-	margin: 2px;
-	color: #000;
+    border: 0 transparent solid;
+    border-bottom: 1px solid #000;
+    margin: 2px;
+    color: #000;
 }
 .shaffl-historyEntry p {
-	color: #000;
+    color: #000;
 }
 .shaffl-historyEntry time {
-	font-size: 0.8rem;
-	font-style: oblique;
+    font-size: 0.8rem;
+    font-style: oblique;
 }
 .ui-dialog-titlebar-close {
   display: none;
@@ -164,38 +179,44 @@
   animation: 2s spinner linear infinite;
 }
 #shaffl-more {
-	text-decoration: underline;
-	cursor: pointer;
+    text-decoration: underline;
+    cursor: pointer;
 }
 #shaffl-image-view {
-	width: 100%;
-	height: 100%;
-	display: none;
+    width: 100%;
+    height: 100%;
+    display: none;
 }
 #shaffl-art-menu {
-	display: none;
+    display: none;
 }
 #shaffl-art-image {
-	max-width: 100%;
-	max-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+#shaffl-notes {
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 #shaffl-bgblur {
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: -2;
-	width: 100%;
-	height: 100%;
-	background-size: cover;
-	filter: blur(110px);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    filter: blur(110px);
 }
 #shaffl-search {
-	float: right;
-	margin-right: 20;
+    float: right;
+    margin-right: 20px;
     margin-top: 5px;
     background: transparent;
     height: 60%;
-	width: 190;
+    width: 190px;
     color: #fff;
     font-size: large;
     border: 0;
@@ -203,44 +224,51 @@
     border-bottom: #fff solid 2px;
 }
 #shaffl-moreActions {
-	float: right;
+    float: right;
     margin-top: 15px;
     margin-right: 15px;
-	cursor: pointer;
+    cursor: pointer;
 }
 #shaffl-moreActions--menu {
-	z-index: 999;
-	display: none;
-	position: fixed;
-	background: #2b2b2b;
-	top: 10%;
-	right: 10px;
-	padding: 5px;
-	border-radius: 0 0 5px 5px;
-	color: #efefef;
+    z-index: 999;
+    display: none;
+    position: fixed;
+    background: #2b2b2b;
+    top: 10%;
+    right: 10px;
+    padding: 5px;
+    border-radius: 0 0 5px 5px;
+    color: #efefef;
 }
 #shaffl-moreActions--menu > ul {
-	padding: 0;
+    padding: 0;
     margin: 0;
-	list-style: none;
-	cursor: pointer;
+    list-style: none;
+    cursor: pointer;
 }
 #shaffl-downloadSelected {
-	display: none;
+    display: none;
 }
 #shaffl-back {
-	cursor: pointer;
-	display: none;
+    cursor: pointer;
+    display: none;
+}
+#server-selection {
+    width: 70%;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid;
 }
 #shaffl-previous {
-	left: 1pc;
+    left: 1pc;
 }
 #shaffl-next {
-	right: 1pc;
+    right: 1pc;
 }
 #shaffl-settingsDialog--history {
-	max-height: 15vh;
-	overflow-y: scroll;
+    max-height: 15vh;
+    overflow-y: scroll;
 }
 #shaffl-downloadingDialog progress {
    -moz-appearance: none;

@@ -6,12 +6,12 @@ class Note {
         this.h = h; //Height
         this.d = d; //Data
     }
-    relatify(s1, s2) {
-        let mp = (s2/(s1/100))/100;
-        this.x = this.x*mp;
-        this.y = this.y*mp;
-        this.w = this.w*mp;
-        this.h = this.h*mp;
+    relatify(scaled, original) {
+        let mp = Math.fround(scaled/original);
+        this.x = Math.fround(this.x*mp);
+        this.y = Math.fround(this.y*mp);
+        this.w = Math.fround(this.w*mp);
+        this.h = Math.fround(this.h*mp);
         return true;
     }
 }

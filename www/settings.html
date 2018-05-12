@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<html lang="en"><head>
+    <script src="cordova.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src * blob:;style-src * 'self' 'unsafe-inline' 'unsafe-eval';script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+    <link rel="stylesheet" href="assets/styles/reset.css">
+    <link rel="stylesheet" href="assets/styles/index.css">
+    <link rel="stylesheet" href="assets/styles/color.css">
+    <script src="js/bundle.js"></script>
+    <title>Shaffl</title>
+    <style>
+      p { color: unset; }
+      button {
+        background: #2b2b2b;
+        border: none;
+        color: #FFF;
+        padding: 4px;
+        border-bottom: 4px solid black;
+        cursor: pointer;
+      }
+      button:active {
+        border-bottom-width: 1px;
+      }
+
+      button:disabled {
+        background: #a0a0a0;
+        border-bottom-color: darkred;
+      }
+      section.settings-node {
+        padding: 20px;
+        border-bottom: 1px solid grey;
+      }
+      section.settings-node:active {
+        background-color: lightgrey;
+      }
+      section.sysinfo {
+        padding: 5px;
+        padding-left: 15px;
+      }
+      h3.sysinfo {
+        color: dimgrey;
+        margin: 0;
+      }
+      input[type=file] {display:none}
+    </style>
+  </head>
+  <body>
+    <header class="shaffl-header hotblack-bg"><a href="index.html"><img src="assets/imgs/Shaffl.png" class="shaffl-logo"></a></header>
+    <main style="background: #fff;overflow: overlay;">
+      <section class="settings-node">
+        <h2>Servers </h2>
+          <section>
+            <label>Select server: </label><select id="server-selection"></select>
+          </section>
+          <section><br/>
+            <input type="file" id="scin" name="input[]" multiple=""> <button id="scin-a" style="">Import server configuration</button>
+          </section>
+      </section>
+      <section class="settings-node">
+        <h2>Plugins </h2>
+          <section>
+            <h4>Installed plugins: </h4>
+            <ul>
+              <li>Core</li>
+            </ul>
+          </section>
+          <section><br/>
+            <input type="file" id="pint" readonly=""> <button disabled="" id="pint-a">Install plugin...</button>
+          </section>
+      </section>
+      <section class="settings-node">
+        <h2>Backup configuration </h2>
+          <em>Not available on your device yet</em>
+      </section>
+      <section class="settings-node sysinfo">
+        <h3 class="sysinfo">Shaffl Version</h3>
+        <p>Looking for version info...</p>
+      </section>
+      <section class="settings-node copyrights">
+        <p>Copyright &copy; 2018. FridayIcecream. All rights reserved.<br/>
+        <small>Shaffl is a free software licensed under BSD 2-Clause License</small></p>
+      </section>
+    </main>
+    <script>
+      var devmenu = 0;
+      var dctm;
+      function handleServerConfiguration(e) {
+        let mf = readConf(e.target.result);
+        if(mf["Manifest-Version"] === "1.0" && mf["Manifest-Type"] === "Shaffl-Plugin" && mf["X-Shaffl-Plugin-Type"] === "ParserExtension" && typeof mf["Model-Id"] !== undefined && typeof mf["Model-XML"] !== undefined) {
+          if(confirm("Are you sure you want to install this plugin?\nName: "+mf["X-Shaffl-Plugin-Name"]+" ("+mf["X-Shaffl-Plugin-Version"]+")\nAuthor: "+mf["X-Shaffl-Plugin-Author"]+" (untrusted)\nBuild tool: "+mf["Build-Tool"].replace(/-/g, ""))) {
+            new Settings().addModelXML(mf["Model-Id"], mf["Model-XML"]).then(function(res) {
+              if(res) window.location.refresh();
+            });
+          }
+        } else {
+          alert("Invalid configuration/manifest!");
+        }
+      }
+      function readConf(str) {
+        confObj = {};
+        str.split("\n").forEach(function(entry) {
+          confObj[entry.split(":")[0]] = entry.split(":").splice(1).join("");
+        });
+        return confObj;
+      }
+      document.querySelector("#server-selection").addEventListener("change", function(e) {
+        new Settings().set("model", e.target.value);
+      });
+      document.querySelector("#scin-a").addEventListener("click", function(e) {
+        var flist = document.querySelector("#scin").files;
+        if(flist.length === 0) document.querySelector("#scin").click();
+        for(var i=0; i<flist.length; i++) {
+          var freader = new FileReader();
+          freader.onload = handleServerConfiguration;
+          freader.readAsText(flist[i]);
+        }
+      });
+      document.querySelector(".copyrights").addEventListener("mousedown", function(e) {
+        clearTimeout(dctm);
+        dctm = window.setTimeout(function(){
+          devmenu = 0;
+        }, 1500);
+        devmenu++;
+        switch(devmenu) {
+           case 5:
+           window.location.href = "developer.html";
+           break;
+        };
+      });
+      openDatabase("Shaffl_Settings", "1", "Shaffl settings.", 9007199254740991).transaction(function(tx) {
+        tx.executeSql("SELECT * FROM shaffl_models", [], function(tx, res) {
+          for(var i=0; i<res.rows.length; i++) {
+            model = res.rows[i];
+            document.querySelector("#server-selection").innerHTML+=`<option value='${model.id}'>${new AbstractXMLModel(model.xml).name}</option>`;
+          }
+        });
+      });
+      document.querySelectorAll("section.sysinfo > p")[0].innerText = Shaffl.v;
+    </script>
+  
+</body>
+</html>
