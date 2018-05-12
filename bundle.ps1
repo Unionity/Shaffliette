@@ -21,6 +21,8 @@ Get-Content www/js/Datatypes/Comment.js | Out-File -filepath www/js/bundle.js -E
 Get-Content www/js/Datatypes/Collections/CommentCollection.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/Datatypes/Art.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/Datatypes/Collections/ArtCollection.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
+Get-Content www/js/Datatypes/Note.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
+Get-Content www/js/Datatypes/Collections/NoteCollection.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/Models/AbstractXMLModel.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/DownloadManager.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force
 Get-Content www/js/Views/ShafflCollectionView.js | Out-File -filepath www/js/bundle.js -Encoding utf8 -Append -Force

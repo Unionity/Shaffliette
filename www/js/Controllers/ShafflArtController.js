@@ -79,6 +79,7 @@ class ShafflArtController {
     }
     save() {
         return new Promise((resolve, reject) => {
+            cordova.plugin.pDialog.init({theme : "TRADITIONAL",progressStyle : "SPINNER",cancelable : false,title : "",message : "Downloading..."});
             let filename = this.id+".jpeg"; //maybe wrong, but ok
             $("#shaffl-status").text("Downloading");
             window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory+"Pictures/", directory => {
@@ -86,7 +87,7 @@ class ShafflArtController {
                     file.createWriter(writer => {
                         writer.onwriteend = () => {
                             window.plugins.toast.showShortCenter("File saved: "+cordova.file.externalRootDirectory+"Pictures/"+filename+".");
-                            $("#shaffl-status").text("Ready");
+                            cordova.plugin.pDialog.dismiss();
                             resolve(true);
                         };
                         writer.onerror = navigator.app.exitApp;

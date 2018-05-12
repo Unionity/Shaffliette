@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="android.shaffl" version="0.0.1.5.5.1-pre" versionCode="14" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="android.shaffl" version="0.0.1.5.5.2-pre" versionCode="14" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Shaffl</name>
     <description>
         A free danbooru client.
@@ -23,6 +23,7 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="~5.3.1" />
     <plugin name="cordova-plugin-clipboard2" spec="~0.1.0" />
 	<plugin name="cordova-plugin-dialogs" spec="~2.0.1" />
+    <plugin name="cordova-plugin-pdialog" spec="~2.0.1" />
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="1250" />
     <preference name="FadeSplashScreenDuration" value="250" />

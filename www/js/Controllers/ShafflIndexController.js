@@ -101,17 +101,20 @@ class ShafflIndexController {
         document.querySelectorAll(selector).forEach(selected => {
             arts.push(Object.setPrototypeOf(JSON.parse(decodeURIComponent(selected.dataset.art)), Art));
         });
-        $("body").append("<dialog id=shaffl-downloadingDialog title=\"Downloading\">Downloading...<br/><progress min=\"1\" value=\"0\" max=\"100\"></progress></dialog>");
-        $("#shaffl-status").text("Downloading");
+        cordova.plugin.pDialog.init({
+            theme : "TRADITIONAL",
+            progressStyle : "HORIZONTAL",
+            cancelable : false,
+            title : "",
+            message : "Downloading..."
+        });
         let DOWNLOAD_PATH = cordova.file.externalRootDirectory+"Pictures/";
         let downloadMgr = new DownloadManager(arts, DOWNLOAD_PATH);
-        $("dialog").dialog({resizable: false, modal: true, draggable: false, show: {effect: "blind", duration: 500}, height: "auto", width: 400});
         downloadMgr.downloadAll(event => {
             if(event == "saved") {
                 loaded++;
-                if(loaded === arts.length) window.setTimeout(() => {$(".ui-dialog, #shaffl-downloadingDialog").remove();}, 500); $("#shaffl-status").text("Ready");
-                let progress = 100/arts.length*loaded;
-                $("#shaffl-downloadingDialog progress").val(progress);
+                if(loaded === arts.length) window.setTimeout(() => {cordova.plugin.pDialog.dismiss();navigator.notification.beep(1);}, 500);
+                cordova.plugin.pDialog.setProgress(100/arts.length*loaded);
             }
         });
     }
