@@ -1,0 +1,44 @@
+<!DOCTYPE booruparser [
+
+<!ELEMENT extension (meta,methods)>
+<!ELEMENT meta (name,base-url,author?)>
+<!ELEMENT methods (getArtCollectionByTags?,getCommentsCollectionById?,getWikiPage?)>
+<!ELEMENT getArtCollectionByTags (url,base-node,id,sample,thumbnail,full,pools?,tags,is-banned?)>
+<!ELEMENT getCommentsCollectionById (url,base-node,score?,creator,updater?,time?,id,body)>
+<!ELEMENT getWikiPage (url)>
+<!ELEMENT tags (copyrights?,artist?,character?,meta?,general)>
+<!ELEMENT url ANY>
+<!ELEMENT base-node ANY>
+<!ELEMENT id ANY>
+<!ELEMENT sample ANY>
+<!ELEMENT thumbnail ANY>
+<!ELEMENT full ANY>
+<!ELEMENT pools ANY>
+<!ELEMENT is-banned ANY>
+<!ELEMENT score ANY>
+<!ELEMENT creator ANY>
+<!ELEMENT updater ANY>
+<!ELEMENT time ANY>
+<!ELEMENT body ANY>
+<!ELEMENT copyrights ANY>
+<!ELEMENT artist ANY>
+<!ELEMENT character ANY>
+<!ELEMENT general ANY>
+<!ATTLIST extension t CDATA #FIXED "booruparser">
+<!ATTLIST id t (element|attribute) #IMPLIED>
+<!ATTLIST sample t (element|attribute) #IMPLIED>
+<!ATTLIST thumbnail t (element|attribute) #IMPLIED>
+<!ATTLIST full t (element|attribute) #IMPLIED>
+<!ATTLIST pools t (element|attribute) #IMPLIED>
+<!ATTLIST is-banned t (element|attribute) #IMPLIED>
+<!ATTLIST score t (element|attribute) #IMPLIED>
+<!ATTLIST creator t (element|attribute) #IMPLIED>
+<!ATTLIST updater t (element|attribute) #IMPLIED>
+<!ATTLIST time t (element|attribute) #IMPLIED>
+<!ATTLIST body t (element|attribute) #IMPLIED>
+<!ATTLIST copyrights t (element|attribute) #IMPLIED>
+<!ATTLIST artist t (element|attribute) #IMPLIED>
+<!ATTLIST character t (element|attribute) #IMPLIED>
+<!ATTLIST info t (element|attribute) #IMPLIED>
+<!ATTLIST general t (element|attribute) #IMPLIED>
+]>

@@ -1,0 +1,3 @@
+[submodule "www/server-configs"]
+	path = www/server-configs
+	url = https://github.com/FridayIcecream/Shaffliette-Server-Configs.git
