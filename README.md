@@ -1,5 +1,5 @@
 # Shaffliette (Shaffl)
-![License][license_badge] ![Open issues][issues_badge] [![codebeat badge](https://codebeat.co/badges/d5599e1c-7b0b-4099-8cd9-21210733a469)](https://codebeat.co/projects/github-com-moemoesoft-shaffliette-master)\
+![License][license_badge] ![Open issues][issues_badge] [![codebeat badge](https://codebeat.co/badges/d5599e1c-7b0b-4099-8cd9-21210733a469)](https://codebeat.co/projects/github-com-moemoesoft-shaffliette-master) [![Join the chat at https://gitter.im/Shaffl/Lobby](https://badges.gitter.im/Shaffl/Lobby.svg)](https://gitter.im/Shaffl/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)\
 Shaffliette (or for short Shaffl) is lightweight (3MB installed/1MB gzipped) open-source booru viewing client for &nbsp;&nbsp;![Android][android_badge].
 ## Features
 + [X] &nbsp;&nbsp;Tag autocompletion (Danbooru *.\* compatible boorus)
