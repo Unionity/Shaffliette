@@ -1,6 +1,6 @@
 class ShafflArtController {
     addListeners() {
-        $("#shaffl-download, #shaffl-notes #shaffl-copyImage, #shaffl-moreInfo, #shaffl-share, #shaffl-previous, #shaffl-next, .shaffl-logo, .shaffl-tag").unbind();
+        $("#shaffl-art-image, #shaffl-download, #shaffl-notes #shaffl-copyImage, #shaffl-moreInfo, #shaffl-share, #shaffl-previous, #shaffl-next, .shaffl-logo, .shaffl-tag").unbind();
         $("#shaffl-download").bind("click", () => { this.save(); });
         $("#shaffl-share").bind("click", () => { this.share(); });
         $("#shaffl-copyImage").bind("click", () => { this.copy(); });
@@ -133,12 +133,14 @@ class ShafflArtController {
         this.model.getCommentCollectionById(this.id).then(comments => {
             new ShafflCommentsView(comments, $(".sahffl-image-info--comments")).render(false);
             this.model.getNoteCollectionById(this.id).then(notes => {
-                new ShafflNotesView(notes, $("#shaffl-notes")).render(false);
-                $(".shaffl-note").unbind();
-                $(".shaffl-note").bind("click", event => {
-                    event.stopPropagation();
-                    navigator.notification.alert(event.target.dataset.d, ()=>{}, "", "OK");
-                });
+		$("#shaffl-art-image").bind("load", () => {
+                    new ShafflNotesView(notes, $("#shaffl-notes")).render(false);
+                    $(".shaffl-note").unbind();
+                    $(".shaffl-note").bind("click", event => {
+			event.stopPropagation();
+			navigator.notification.alert(decodeURIComponent(event.target.dataset.d), ()=>{}, "", "OK");
+                    });
+		});
             });
         });
         this.addListeners();

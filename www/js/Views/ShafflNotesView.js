@@ -9,7 +9,7 @@ class ShafflNotesView {
         this.notes.collection.forEach(note => {
             note.relatify($("#shaffl-art-image")[0].width, $("#shaffl-art-image")[0].naturalWidth);
             let style = `left: ${note.x}px; top: ${note.y}px; width: ${note.w}px; height: ${note.h}px;`;
-            this.el.prepend(`<article style='${style}' data-d='${note.d}' class='shaffl-note'>&nbsp;</article>`);
+            this.el.prepend(`<article style='${style}' data-d='${encodeURIComponent(note.d)}' class='shaffl-note'>&nbsp;</article>`);
         });
     }
 }
