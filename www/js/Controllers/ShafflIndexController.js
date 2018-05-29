@@ -57,6 +57,9 @@ class ShafflIndexController {
         $("#shaffl-settings").bind("click", () => {
             window.location.href = "settings.html";
         });
+	$("#shaffl-terminalButton").bind("click", () => {
+            $("#shaffl-terminal-overlay").toggle();
+        });
         $(".shaffl-art--thumb").bind("contextmenu", event => {
             if(event.target.dataset.selected == "selected") {
                 event.target.dataset.selected = "no";
@@ -132,6 +135,7 @@ class ShafflIndexController {
         window.loadCooling = false;
         this.view.render(false);
         this.addListeners();
+	this.terminal = new Terminal(document.querySelector("#shaffl-terminal"), TerminalApps, TerminalOptions, this);
     }
     constructor() {
         this.offset = 1; //aka page

@@ -166,6 +166,40 @@
 .shaffl-note[style="left: 0px; top: 0px; width: 0px; height: 0px;"] {
     visibility: hidden;
 }
+#shaffl-terminal-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .9);
+    padding: 4pt;
+    display: none;
+    z-index: 2;
+}
+#shaffl-terminal {
+  padding: 5px;
+  background: #002b36;
+  color: #839496;
+  height: 90vh;
+  width: 89vw;
+  overflow-y: scroll;
+  border: 10px solid #fff;
+  border-radius: 10px;
+}
+#shaffl-terminal .terminal_output {
+  color: #bdbdbd;
+}
+#terminal_inputBox:before {
+  content: attr(data-prefix);
+}
+#terminal_input {
+  color: #859900;
+  background: none;
+  border: none;
+  width: 50%;
+}
+#terminal_input:focus {
+  outline: none;
+}
 .shaffl-art-desc {
     display: inline-block;
     margin: 10px;
