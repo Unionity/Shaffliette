@@ -1,5 +1,5 @@
 # Shaffliette (Shaffl)
-![License][license_badge] ![Open issues][issues_badge] [![codebeat badge](https://codebeat.co/badges/d5599e1c-7b0b-4099-8cd9-21210733a469)](https://codebeat.co/projects/github-com-moemoesoft-shaffliette-master) [![Join the chat at https://gitter.im/Shaffl/Lobby](https://badges.gitter.im/Shaffl/Lobby.svg)](https://gitter.im/Shaffl/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)\
+[![Build status](https://ci.appveyor.com/api/projects/status/1hwatur5oh0aj3lf/branch/master?svg=true)](https://ci.appveyor.com/project/kfcjew/shaffliette/branch/master) [![CodeFactor](https://www.codefactor.io/repository/github/fridayicecream/shaffliette/badge)](https://www.codefactor.io/repository/github/fridayicecream/shaffliette) [![Join the chat at https://gitter.im/Shaffl/Lobby](https://badges.gitter.im/Shaffl/Lobby.svg)](https://gitter.im/Shaffl/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)\
 Shaffliette (or for short Shaffl) is lightweight (3MB installed/1MB gzipped) open-source booru viewing client for &nbsp;&nbsp;![Android][android_badge].
 ## Features
 + [X] &nbsp;&nbsp;Tag autocompletion (Danbooru *.\* compatible boorus)
@@ -15,6 +15,4 @@ Shaffliette (or for short Shaffl) is lightweight (3MB installed/1MB gzipped) ope
 ![compatability](https://github.com/moemoesoft/Shaffliette/blob/master/Compatability.png?raw=true)
 
 
-[license_badge]: https://img.shields.io/badge/license-BSD%202--Clause-blue.svg?style=flat-square
-[issues_badge]: https://img.shields.io/github/issues-raw/moemoesoft/shaffliette.svg?style=flat-square&colorB=8e0000&logo=github
 [android_badge]: https://img.shields.io/badge/Android-OS-green.svg?longCache=true&style=plastic&colorA=199600&colorB=199600
