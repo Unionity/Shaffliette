@@ -16,7 +16,7 @@ class ShafflIndexController {
             $("#shaffl-collection-view, #shaffl-collection-menu").hide();
             $(".shaffl-main").css("overflow-y", "hidden");
             try {
-            let artController = new ShafflArtController(Object.setPrototypeOf(JSON.parse(decodeURIComponent(event.target.dataset.art)), Art));
+                let artController = new ShafflArtController(Object.setPrototypeOf(JSON.parse(decodeURIComponent(event.target.dataset.art)), Art));
             } catch(e) {
                 alert(e);
                 alert(e.stack);
